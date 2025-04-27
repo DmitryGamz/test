@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Pharmacy Fair Dev
+
+  output:
+    ansi:
+      enabled: detect
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/pharmacy
+    username: postgres
+    password: postgres
+    hikari:
+      schema: public
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+
+  flyway:
+    driver-class-name: org.postgresql.Driver
+    validate-on-migrate: true
+    enabled: true
+
+  docker:
+    compose:
+      enabled: true
+      file: docker/docker-compose.yaml
+
+logging:
+  level.gamz.projects.*: DEBUG
+  level.org.springframework.security : DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread]: %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.sss} [%thread] %-5level %logger{36}: %msg%n"
+  file:
+    name: logs/dev/application.log
+    path: logs/dev
