@@ -17,8 +17,8 @@ import java.util.List;
 @Table(name="organizations")
 public class Organization {
     @Id
-    @GeneratedValue
-    @Column(name = "organization_id")
+    @SequenceGenerator(name = "organizations_local_seq", sequenceName = "organizations_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organizations_local_seq")
     private long id;
 
     private String name;

@@ -18,22 +18,14 @@ import java.util.List;
 @Table(name="roles")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue
-    @Column(name = "role_id")
+    @SequenceGenerator(name = "roles_local_seq", sequenceName = "roles_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roles_local_seq")
     private long id;
 
     @Column(name = "role_name")
     private String name;
 
     private String description;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;

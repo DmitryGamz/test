@@ -24,9 +24,12 @@ public class SecurityConfig {
     SecurityFilterChain springWebFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/auth/register").permitAll()
+                                .requestMatchers("/api/v1/auth/authenticate").permitAll()
+                                .requestMatchers("/api/v1/auth/clear").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -21,8 +21,8 @@ import java.util.List;
 @Table(name="users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
-    @Column(name = "user_id")
+    @SequenceGenerator(name = "users_local_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_local_seq")
     private long id;
 
     private String email;
@@ -82,9 +82,9 @@ public class User implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastActivity;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "role_name",
+            name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
