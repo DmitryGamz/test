@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="Organizations")
+@Table(name="organizations")
 public class Organization {
     @Id
     @GeneratedValue
