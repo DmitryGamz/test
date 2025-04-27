@@ -82,7 +82,12 @@ public class User implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastActivity;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "role_name",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles;
 
     @Override

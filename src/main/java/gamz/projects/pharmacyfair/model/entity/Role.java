@@ -35,7 +35,7 @@ public class Role implements GrantedAuthority {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
 
-    @ManyToMany(mappedBy = "Users")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     @Override
