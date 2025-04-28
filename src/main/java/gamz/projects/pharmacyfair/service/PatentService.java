@@ -55,17 +55,14 @@ public class PatentService {
 	public PatentDTO createPatent(PatentRequest patentRequest) {
 		Patent patent = patentMapper.toPatentFromRequest(patentRequest);
 		
-		// Проверяем существование проекта
 		Project project = projectRepository.findById(patentRequest.getProjectId())
 				.orElseThrow(() -> new RuntimeException("Project with id " + patentRequest.getProjectId() + " not found"));
 		patent.setProject(project);
 		
-		// Проверяем существование типа патента
 		PatentType patentType = patentTypeRepository.findById(patentRequest.getPatentTypeId())
 				.orElseThrow(() -> new PatentTypeNotFoundException("Patent type with id " + patentRequest.getPatentTypeId() + " not found"));
 		patent.setPatentType(patentType);
 		
-		// Устанавливаем даты создания и обновления
 		patent.setCreatedAt(LocalDateTime.now());
 		patent.setUpdatedAt(LocalDateTime.now());
 		
@@ -77,7 +74,6 @@ public class PatentService {
 		Patent existingPatent = patentRepository.findById(id)
 				.orElseThrow(() -> new PatentNotFoundException("Patent with id " + id + " not found"));
 		
-		// Обновляем поля патента
 		if (patentRequest.getProjectId() != null) {
 			Project project = projectRepository.findById(patentRequest.getProjectId())
 					.orElseThrow(() -> new RuntimeException("Project with id " + patentRequest.getProjectId() + " not found"));
@@ -114,7 +110,6 @@ public class PatentService {
 			existingPatent.setApplicantId(patentRequest.getApplicantId());
 		}
 		
-		// Обновляем дату обновления
 		existingPatent.setUpdatedAt(LocalDateTime.now());
 		
 		Patent updatedPatent = patentRepository.save(existingPatent);
