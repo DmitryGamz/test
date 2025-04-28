@@ -33,6 +33,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation ("com.h2database:h2")
+    implementation ("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     //Inner Docker Compose
@@ -55,6 +57,12 @@ dependencies {
     // MapStruct
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.6.3")
+
+    // Swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+
+    //servlet
+    compileOnly("javax.servlet:servlet-api:3.0-alpha-1")
 
 }
 
