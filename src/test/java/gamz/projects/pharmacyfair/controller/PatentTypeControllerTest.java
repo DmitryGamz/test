@@ -1,6 +1,7 @@
 package gamz.projects.pharmacyfair.controller;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +73,7 @@ class PatentTypeControllerTest {
 	@DisplayName("Should return all patent types")
 	void getAllPatentTypes() throws Exception {
 		// Arrange
-		List<PatentTypeDTO> patentTypes = Arrays.asList(patentTypeDTO);
+		List<PatentTypeDTO> patentTypes = Collections.singletonList(patentTypeDTO);
 		when(patentTypeService.getAllPatentTypes()).thenReturn(patentTypes);
 		
 		// Act & Assert

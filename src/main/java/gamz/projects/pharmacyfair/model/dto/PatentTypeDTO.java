@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatentTypeDTO {
-    private Long id;
-    private String typeCode;
-    private String typeName;
-    private String description;
+	private Long id;
+	private String typeCode;
+	private String typeName;
+	private String description;
 } 

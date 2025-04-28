@@ -36,7 +36,7 @@ spring:
 
 logging:
   level.gamz.projects.*: DEBUG
-  level.org.springframework.security : DEBUG
+  level.org.springframework.security: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread]: %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.sss} [%thread] %-5level %logger{36}: %msg%n"

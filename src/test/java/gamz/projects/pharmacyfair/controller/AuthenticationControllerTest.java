@@ -2,7 +2,6 @@ package gamz.projects.pharmacyfair.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gamz.projects.pharmacyfair.configuration.TestSecurityConfig;
-import gamz.projects.pharmacyfair.model.exception.UserAlreadyExistException;
 import gamz.projects.pharmacyfair.model.exception.UserNotFoundException;
 import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
@@ -27,7 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AuthenticationController.class)

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatentTypeRequest {
-    private String typeCode;
-    private String typeName;
-    private String description;
+	private String typeCode;
+	private String typeName;
+	private String description;
 } 
