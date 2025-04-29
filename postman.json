@@ -1,0 +1,1387 @@
+{
+  "info": {
+    "_postman_id": "YOUR_UNIQUE_COLLECTION_ID",
+    "name": "PharmacyFair - Patents API",
+    "description": "API collection for managing Patent Types and Patents, including Authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "YOUR_EXPORTER_ID"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Endpoints for user registration and authentication.",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Token is received and set\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('token');",
+                  "    pm.expect(jsonData.token).to.be.a('string');",
+                  "    if (jsonData.token) {",
+                  "        pm.collectionVariables.set(\"authToken\", jsonData.token);",
+                  "        console.log(\"Auth Token set.\");",
+                  "    } else {",
+                  "         console.error(\"Auth Token not found in response.\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\",\n  \"email\": \"test.user@example.com\",\n  \"phone\": \"+1234567890\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registers a new user and returns an authentication token."
+          },
+          "response": []
+        },
+        {
+          "name": "Authenticate User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Token is received and set\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('token');",
+                  "    pm.expect(jsonData.token).to.be.a('string');",
+                  "    if (jsonData.token) {",
+                  "        pm.collectionVariables.set(\"authToken\", jsonData.token);",
+                  "        console.log(\"Auth Token set.\");",
+                  "    } else {",
+                  "         console.error(\"Auth Token not found in response.\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test.user@example.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/authenticate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "authenticate"
+              ]
+            },
+            "description": "Authenticates a user and returns a token."
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Authentication (Placeholder)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "// Note: This endpoint might clear server-side state, ",
+                  "// or could be used client-side to clear the token.",
+                  "// We can clear the Postman variable here if desired:",
+                  "// pm.collectionVariables.unset(\"authToken\");",
+                  "// console.log(\"Auth Token cleared from Postman.\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/clear",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "clear"
+              ]
+            },
+            "description": "Placeholder for clearing authentication context (specific behavior depends on implementation)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Patent Types",
+      "description": "API for managing Patent Types.",
+      "item": [
+        {
+          "name": "Get All Patent Types",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "// Optional: Check structure of the first item if array is not empty",
+                  "pm.test(\"Patent Type structure is correct\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.expect(jsonData[0]).to.have.property('id');",
+                  "        pm.expect(jsonData[0]).to.have.property('typeCode');",
+                  "        pm.expect(jsonData[0]).to.have.property('typeName');",
+                  "        pm.expect(jsonData[0].id).to.be.a('number');",
+                  "        pm.expect(jsonData[0].typeCode).to.be.a('string');",
+                  "        pm.expect(jsonData[0].typeName).to.be.a('string');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types"
+              ]
+            },
+            "description": "Retrieves a list of all available patent types."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Patent Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('typeCode');",
+                  "    pm.expect(jsonData).to.have.property('typeName');",
+                  "    pm.expect(jsonData.id).to.be.a('number');",
+                  "    pm.expect(jsonData.typeCode).to.be.a('string');",
+                  "    pm.expect(jsonData.typeName).to.be.a('string');",
+                  "});",
+                  "// Optional: Save the created ID to use in other requests",
+                  "pm.test(\"Save created Patent Type ID\", function() {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.id) {",
+                  "        pm.collectionVariables.set(\"createdPatentTypeId\", jsonData.id);",
+                  "        console.log(\"Saved createdPatentTypeId: \" + jsonData.id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeCode\": \"UTIL\",\n  \"typeName\": \"Utility Patent\",\n  \"description\": \"Standard patent for inventions\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types"
+              ]
+            },
+            "description": "Creates a new patent type."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patent Type by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('typeCode');",
+                  "    pm.expect(jsonData).to.have.property('typeName');",
+                  "    pm.expect(jsonData.id).to.be.a('number');",
+                  "    pm.expect(jsonData.typeCode).to.be.a('string');",
+                  "    pm.expect(jsonData.typeName).to.be.a('string');",
+                  "});",
+                  "// Optional: Check if the returned ID matches the requested ID",
+                  "pm.test(\"Returned ID matches requested ID\", function() {",
+                  "    const requestedId = pm.variables.get(\"patentTypeId\"); // Get var from request URL path",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.equal(parseInt(requestedId, 10));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types/:patentTypeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types",
+                ":patentTypeId"
+              ],
+              "variable": [
+                {
+                  "key": "patentTypeId",
+                  "value": "{{createdPatentTypeId}}",
+                  "description": "ID of the Patent Type to retrieve (set by Create request or manually)",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves a specific patent type by its unique ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Patent Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('typeCode');",
+                  "    pm.expect(jsonData).to.have.property('typeName');",
+                  "    pm.expect(jsonData.id).to.be.a('number');",
+                  "    pm.expect(jsonData.typeCode).to.equal(\"UTIL-UPD\"); // Check if update reflected",
+                  "    pm.expect(jsonData.typeName).to.equal(\"Utility Patent Updated\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeCode\": \"UTIL-UPD\",\n  \"typeName\": \"Utility Patent Updated\",\n  \"description\": \"Standard patent for inventions - updated description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types/:patentTypeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types",
+                ":patentTypeId"
+              ],
+              "variable": [
+                {
+                  "key": "patentTypeId",
+                  "value": "{{createdPatentTypeId}}",
+                  "description": "ID of the Patent Type to update (set by Create request or manually)",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Updates an existing patent type identified by its ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patent Type by Name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure and name\", function () {",
+                  "    const requestedName = pm.variables.get(\"typeName\");",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('typeCode');",
+                  "    pm.expect(jsonData).to.have.property('typeName');",
+                  "    pm.expect(jsonData.typeName).to.equal(requestedName);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types/name/:typeName",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types",
+                "name",
+                ":typeName"
+              ],
+              "variable": [
+                {
+                  "key": "typeName",
+                  "value": "Utility Patent Updated",
+                  "description": "Name of the Patent Type to retrieve.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves a specific patent type by its name."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patent Type by Code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure and code\", function () {",
+                  "    const requestedCode = pm.variables.get(\"typeCode\");",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('typeCode');",
+                  "    pm.expect(jsonData).to.have.property('typeName');",
+                  "     pm.expect(jsonData.typeCode).to.equal(requestedCode);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types/code/:typeCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types",
+                "code",
+                ":typeCode"
+              ],
+              "variable": [
+                {
+                  "key": "typeCode",
+                  "value": "UTIL-UPD",
+                  "description": "Code of the Patent Type to retrieve.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves a specific patent type by its code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Patent Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "// Optional: Clear the variable if deletion is successful",
+                  "pm.test(\"Clear deleted Patent Type ID\", function() {",
+                  "   if (pm.response.code === 204) {",
+                  "       pm.collectionVariables.unset(\"createdPatentTypeId\");",
+                  "       console.log(\"Cleared createdPatentTypeId variable after successful deletion.\");",
+                  "   }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patent-types/:patentTypeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patent-types",
+                ":patentTypeId"
+              ],
+              "variable": [
+                {
+                  "key": "patentTypeId",
+                  "value": "{{createdPatentTypeId}}",
+                  "description": "ID of the Patent Type to delete (set by Create request or manually)",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Deletes a patent type identified by its ID. Run 'Create Patent Type' first."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Patents",
+      "description": "API for managing Patents.",
+      "item": [
+        {
+          "name": "Get All Patents",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "// Optional: Check structure of the first item if array is not empty",
+                  "pm.test(\"Patent structure is correct\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.expect(jsonData[0]).to.have.property('id');",
+                  "        pm.expect(jsonData[0]).to.have.property('projectId');",
+                  "        pm.expect(jsonData[0]).to.have.property('patentTypeId');",
+                  "        pm.expect(jsonData[0]).to.have.property('patentNumber');",
+                  "        pm.expect(jsonData[0]).to.have.property('expiryDate');",
+                  "        // Add other property checks as needed",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents"
+              ]
+            },
+            "description": "Retrieves a list of all patents."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Patent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('projectId');",
+                  "    pm.expect(jsonData).to.have.property('patentTypeId');",
+                  "    pm.expect(jsonData).to.have.property('patentNumber');",
+                  "    pm.expect(jsonData).to.have.property('expiryDate');",
+                  "    pm.expect(jsonData.id).to.be.a('number');",
+                  "    pm.expect(jsonData.patentNumber).to.equal(\"US1234567B2\"); // Check against request",
+                  "});",
+                  "// Optional: Save the created ID",
+                  "pm.test(\"Save created Patent ID\", function() {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.id) {",
+                  "        pm.collectionVariables.set(\"createdPatentId\", jsonData.id);",
+                  "        console.log(\"Saved createdPatentId: \" + jsonData.id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": 1,\n  \"patentTypeId\": {{createdPatentTypeId}},  // Use ID from created Patent Type or set manually\n  \"patentNumber\": \"US1234567B2\",\n  \"expiryDate\": \"2035-12-31\",\n  \"patentOwnerId\": 1,\n  \"applicationNumber\": \"APP987654\",\n  \"filingDate\": \"2024-01-15\",\n  \"applicantId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents"
+              ]
+            },
+            "description": "Creates a new patent. Assumes a Patent Type exists (run 'Create Patent Type' or set ID manually)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patent by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('projectId');",
+                  "    pm.expect(jsonData).to.have.property('patentTypeId');",
+                  "    pm.expect(jsonData).to.have.property('patentNumber');",
+                  "    pm.expect(jsonData.id).to.be.a('number');",
+                  "});",
+                  "pm.test(\"Returned ID matches requested ID\", function() {",
+                  "    const requestedId = pm.variables.get(\"patentId\");",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.equal(parseInt(requestedId, 10));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents/:patentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents",
+                ":patentId"
+              ],
+              "variable": [
+                {
+                  "key": "patentId",
+                  "value": "{{createdPatentId}}",
+                  "description": "ID of the Patent to retrieve.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves a specific patent by its ID. Run 'Create Patent' first."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Patent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test(\"Response has correct structure and updated data\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('patentNumber');",
+                  "    pm.expect(jsonData.patentNumber).to.equal(\"US1234567B2-UPD\"); // Check updated field",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": 1, \n  \"patentTypeId\": {{createdPatentTypeId}}, // Use appropriate ID\n  \"patentNumber\": \"US1234567B2-UPD\", // Updated value\n  \"expiryDate\": \"2036-12-31\",\n  \"patentOwnerId\": 1,\n  \"applicationNumber\": \"APP987654-UPD\",\n  \"filingDate\": \"2024-01-15\",\n  \"applicantId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents/:patentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents",
+                ":patentId"
+              ],
+              "variable": [
+                {
+                  "key": "patentId",
+                  "value": "{{createdPatentId}}",
+                  "description": "ID of the Patent to update.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Updates an existing patent. Run 'Create Patent' first."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patents by Type ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is JSON Array\", function () {",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "// Optional: Check if patents in response have the correct type ID",
+                  "pm.test(\"Patents have the correct Type ID\", function() {",
+                  "    const requestedTypeId = pm.variables.get(\"patentTypeId\");",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        jsonData.forEach(function(patent) {",
+                  "            pm.expect(patent.patentTypeId).to.equal(parseInt(requestedTypeId, 10));",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents/type/:patentTypeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents",
+                "type",
+                ":patentTypeId"
+              ],
+              "variable": [
+                {
+                  "key": "patentTypeId",
+                  "value": "{{createdPatentTypeId}}",
+                  "description": "ID of the Patent Type to filter patents by.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves all patents associated with a specific Patent Type ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patents by Project ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "// NOTE: The Swagger description seems incomplete here, assuming it returns an array.",
+                  "pm.test(\"Response is JSON Array\", function () {",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});",
+                  "// Optional: Check if patents in response have the correct project ID",
+                  "pm.test(\"Patents have the correct Project ID\", function() {",
+                  "    const requestedProjectId = pm.variables.get(\"projectId\");",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.length > 0) {",
+                  "        jsonData.forEach(function(patent) {",
+                  "            pm.expect(patent.projectId).to.equal(parseInt(requestedProjectId, 10));",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents/project/:projectId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents",
+                "project",
+                ":projectId"
+              ],
+              "variable": [
+                {
+                  "key": "projectId",
+                  "value": "1",
+                  "description": "ID of the Project to filter patents by.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieves all patents associated with a specific Project ID. (Response schema assumed based on context)."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Patent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "// Optional: Clear the variable",
+                  "pm.test(\"Clear deleted Patent ID\", function() {",
+                  "   if (pm.response.code === 204) {",
+                  "       pm.collectionVariables.unset(\"createdPatentId\");",
+                  "       console.log(\"Cleared createdPatentId variable after successful deletion.\");",
+                  "   }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patents/:patentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patents",
+                ":patentId"
+              ],
+              "variable": [
+                {
+                  "key": "patentId",
+                  "value": "{{createdPatentId}}",
+                  "description": "ID of the Patent to delete.",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Deletes a patent identified by its ID. Run 'Create Patent' first."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "description": "User related endpoints.",
+      "item": [
+        {
+          "name": "Get User Info (Placeholder)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "// Test depends heavily on the actual response type ('string' in example)",
+                  "// If it's just a string:",
+                  "pm.test(\"Response body is a string\", function () {",
+                  "    pm.expect(pm.response.text()).to.be.a('string');",
+                  "});",
+                  "// If it was meant to be JSON user details:",
+                  "// pm.test(\"Response is JSON\", function () {",
+                  "//     pm.response.to.be.json;",
+                  "// });",
+                  "// pm.test(\"Response has user properties\", function () {",
+                  "//     const jsonData = pm.response.json();",
+                  "//     pm.expect(jsonData).to.have.property('email');",
+                  "//     pm.expect(jsonData).to.have.property('firstName');",
+                  "//     // etc.",
+                  "// });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user"
+              ]
+            },
+            "description": "Retrieves information about the currently authenticated user. The example shows a 'string' response, adjust tests if it returns structured user data (JSON)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string",
+      "description": "The base URL for the API (e.g., http://localhost:8080)"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string",
+      "description": "JWT Authentication Token obtained from /auth/authenticate or /auth/register"
+    },
+    {
+      "key": "createdPatentTypeId",
+      "value": "",
+      "type": "string",
+      "description": "Stores the ID of the last created Patent Type"
+    },
+    {
+      "key": "createdPatentId",
+      "value": "",
+      "type": "string",
+      "description": "Stores the ID of the last created Patent"
+    }
+  ]
+}
