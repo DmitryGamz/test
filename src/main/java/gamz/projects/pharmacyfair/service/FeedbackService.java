@@ -1,18 +1,18 @@
 package gamz.projects.pharmacyfair.service;
 
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import gamz.projects.pharmacyfair.model.dto.FeedbackDTO;
 import gamz.projects.pharmacyfair.model.entity.Feedback;
 import gamz.projects.pharmacyfair.model.entity.User;
+import gamz.projects.pharmacyfair.model.exception.FeedbackNotFoundException;
 import gamz.projects.pharmacyfair.model.mapper.FeedbackMapper;
 import gamz.projects.pharmacyfair.model.request.FeedbackCreateRequest;
-import gamz.projects.pharmacyfair.model.request.FeedbackProcessRequest;
-import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
-import gamz.projects.pharmacyfair.model.response.FeedbackCreateResponse;
-import gamz.projects.pharmacyfair.model.response.FeedbackProcessResponse;
 import gamz.projects.pharmacyfair.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -22,21 +22,32 @@ public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final FeedbackMapper feedbackMapper;
 
-    public FeedbackCreateResponse create(FeedbackCreateRequest request) {
-        Feedback feedback = feedbackMapper.toFeedbackFromCreateRequest(request);
-        Feedback feedbackSaved = feedbackRepository.save(feedback);
-        return FeedbackCreateResponse.builder().feedbackNumber(feedbackSaved.getId()).build();
+    public List<FeedbackDTO> getAllFeedback() {
+        return StreamSupport.stream(feedbackRepository.findAll().spliterator(), false)
+                .map(feedbackMapper::toFeedbackDTO)
+                .collect(Collectors.toList());
     }
 
-    public FeedbackProcessResponse process(FeedbackProcessRequest request, User user) {
-        Feedback feedback = feedbackRepository.findById(request.getFeedbackId()).get();
+    public FeedbackDTO getFeedbackById (Long id) {
+        Feedback feedback = feedbackRepository.findById(id)
+                .orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found"));
+        return feedbackMapper.toFeedbackDTO(feedback);
+    }
+
+    public FeedbackDTO createFeedback(FeedbackCreateRequest request) {
+        Feedback feedback = feedbackMapper.toFeedbackFromRequest(request);
+
+        feedback.setCreatedAt(LocalDateTime.now());
+
+        Feedback savedFeedback = feedbackRepository.save(feedback);
+        return feedbackMapper.toFeedbackDTO(savedFeedback);
+    }
+
+    public FeedbackDTO processFeedback(Long id, User user) {
+        Feedback feedback = feedbackRepository.findById(id)
+                .orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found"));
         feedback.processedBy = user;
-        feedbackRepository.save(feedback);
-        return FeedbackProcessResponse.builder().build();
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ErrorNotFoundResponse handleNonFoundException(NoSuchElementException ex) {
-        return ErrorNotFoundResponse.builder().message("Feedback с таким id не существует").build();
+        Feedback savedFeedback = feedbackRepository.save(feedback);
+        return feedbackMapper.toFeedbackDTO(savedFeedback);
     }
 }

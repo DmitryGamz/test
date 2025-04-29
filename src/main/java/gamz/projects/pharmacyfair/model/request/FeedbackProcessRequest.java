@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class FeedbackProcessRequest {
     @Valid
     @NotEmpty(message = "Вы должны указать номер заявки")
-    private Integer feedbackId;
+    private Long feedbackId;
 }

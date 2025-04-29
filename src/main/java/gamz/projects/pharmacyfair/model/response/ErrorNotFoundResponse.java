@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ErrorNotFoundResponse {
-    final static String status = "error";
+    final private String status = "error";
     private String message;
 }
