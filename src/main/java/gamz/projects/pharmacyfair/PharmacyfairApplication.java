@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PharmacyfairApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(PharmacyfairApplication.class, args);
-    }
-
+	
+	public static void main(String[] args) {
+		SpringApplication.run(PharmacyfairApplication.class, args);
+	}
+	
 }

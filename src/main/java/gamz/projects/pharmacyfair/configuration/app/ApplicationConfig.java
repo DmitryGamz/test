@@ -16,48 +16,52 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-
-    private final UserRepository repository;
-
-    /**
-     * Return service UserDetailsService
-     * @return UserDetailsService
-     */
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> repository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    /**
-     * Sets the authentication provider
-     * @return AuthenticationProvider authProvider
-     */
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    /**
-     * Returns the initialized authentication manager
-     * @param config AuthenticationConfiguration
-     * @return AuthenticationManager
-     * @throws Exception exception
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    /**
-     * The encoder for the password
-     * @return PasswordEncoder BCryptPasswordEncoder
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	
+	private final UserRepository repository;
+	
+	/**
+	 * Return service UserDetailsService
+	 *
+	 * @return UserDetailsService
+	 */
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return username -> repository.findByEmail(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	}
+	
+	/**
+	 * Sets the authentication provider
+	 *
+	 * @return AuthenticationProvider authProvider
+	 */
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService());
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
+	
+	/**
+	 * Returns the initialized authentication manager
+	 *
+	 * @param config AuthenticationConfiguration
+	 * @return AuthenticationManager
+	 * @throws Exception exception
+	 */
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
+	
+	/**
+	 * The encoder for the password
+	 *
+	 * @return PasswordEncoder BCryptPasswordEncoder
+	 */
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
