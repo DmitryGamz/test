@@ -2,23 +2,28 @@ package gamz.projects.pharmacyfair.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import gamz.projects.pharmacyfair.model.dto.FeedbackDTO;
 import gamz.projects.pharmacyfair.model.exception.FeedbackNotFoundException;
-import gamz.projects.pharmacyfair.model.request.FeedbackCreateRequest;
+import gamz.projects.pharmacyfair.model.request.FeedbackEditRequest;
+import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
 import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
 import gamz.projects.pharmacyfair.model.response.ErrorValidationResponse;
 import gamz.projects.pharmacyfair.service.FeedbackService;
@@ -38,14 +43,16 @@ public class FeedbackController {
 
     @GetMapping
     @Operation(summary = "Получить всю обратную связь")
-    public ResponseEntity<List<FeedbackDTO>> getAllFeedback() {
-        return ResponseEntity.ok(feedbackService.getAllFeedback());
+    public ResponseEntity<List<FeedbackDTO>> getAllFeedback(
+        @Parameter(description = "Фильтрация по isProcessed") @RequestParam(required = false) Optional<Boolean> isProcessed
+    ) {
+        return ResponseEntity.ok(feedbackService.getAllFeedback(isProcessed));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Получить обратную связь по id")
     public ResponseEntity<FeedbackDTO> getFeedbackById(
-        @Parameter(description = "ID ") @PathVariable Long id
+        @Parameter(description = "ID обратной связи") @PathVariable Long id
     ) {
         return ResponseEntity.ok(feedbackService.getFeedbackById(id));
     }
@@ -54,18 +61,27 @@ public class FeedbackController {
     @Operation(summary = "Создать обратную связь")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<FeedbackDTO> createFeedback(
-        @Parameter(description = "Данные обратной связи") @RequestBody @Valid FeedbackCreateRequest request
+        @Parameter(description = "Данные обратной связи") @RequestBody @Valid FeedbackRequest request
     ) {
         return ResponseEntity.ok(feedbackService.createFeedback(request));
     }
 
-    @PostMapping("/process/{id}")
-    @Operation(summary = "Обработать заявку от обратной связи")
-    public ResponseEntity<FeedbackDTO> processFeedback(
+    @PutMapping("/{id}")
+    @Operation(summary = "Обновить обратную связь")
+    public ResponseEntity<FeedbackDTO> editFeedback(
+        @Parameter(description = "ID обратной связи") @PathVariable Long id,
+        @Parameter(description = "Обновленные данные обратной связи") @RequestBody @Valid FeedbackEditRequest request
+    ) {
+        return ResponseEntity.ok(feedbackService.editFeedback(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить обратную связь")
+    public ResponseEntity<FeedbackDTO> deleteFeedback(
         @Parameter(description = "ID обратной связи") @PathVariable Long id
     ) {
-        // ToDo: Доделать обработку заявок
-        return ResponseEntity.ok(feedbackService.processFeedback(id, null));
+        feedbackService.deleteFeedback(id);
+        return ResponseEntity.noContent().build();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -79,7 +95,7 @@ public class FeedbackController {
             errors.put(fieldName, errorMessage);
         });
 
-        return ResponseEntity.ok(ErrorValidationResponse.builder().errors(errors).build());
+        return ResponseEntity.badRequest().body(ErrorValidationResponse.builder().errors(errors).build());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

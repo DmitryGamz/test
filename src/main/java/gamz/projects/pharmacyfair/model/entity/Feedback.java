@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 
 @Data
 @Builder
@@ -39,7 +40,8 @@ public class Feedback {
     public String message;
 
     @Column(name = "is_processed")
-    public Boolean isProcessed;
+    @Default
+    public Boolean isProcessed = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "processed_by")

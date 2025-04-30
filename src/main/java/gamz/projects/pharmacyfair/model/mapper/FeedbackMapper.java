@@ -7,13 +7,13 @@ import org.mapstruct.ReportingPolicy;
 
 import gamz.projects.pharmacyfair.model.dto.FeedbackDTO;
 import gamz.projects.pharmacyfair.model.entity.Feedback;
-import gamz.projects.pharmacyfair.model.request.FeedbackCreateRequest;
+import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface FeedbackMapper {
 
-    Feedback toFeedbackFromRequest(FeedbackCreateRequest request);
+    Feedback toFeedbackFromRequest(FeedbackRequest request);
 
 	@Mapping(target = "processedBy", source = "processedBy.id")
 	FeedbackDTO toFeedbackDTO(Feedback patent);

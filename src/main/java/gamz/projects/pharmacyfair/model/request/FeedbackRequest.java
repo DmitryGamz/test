@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackCreateRequest {
+public class FeedbackRequest {
 
     @Valid
-    @NotEmpty(message = "Поле имя должно быть заполнено")
+    @NotEmpty(message = "Поле name должно быть заполнено")
     @Size(max = 255, message = "Поле Имя не должно быть больше 255 символов")
     private String name;
 
@@ -25,7 +25,6 @@ public class FeedbackCreateRequest {
     private String email;
 
     @Valid
-    @NotEmpty(message = "Поле Сообщение должно быть заполнено")
-    @Size(max = 255, message = "Поле Сообщение не должно быть больше 255 символов")
+    @NotEmpty(message = "Поле message должно быть заполнено")
     private String message;
 }
