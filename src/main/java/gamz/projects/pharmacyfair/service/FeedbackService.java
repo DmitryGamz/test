@@ -54,6 +54,7 @@ public class FeedbackService {
         if (feedbackRequest.getProcessedBy() != null) {
             User user = userRepository.findById(Math.toIntExact(feedbackRequest.getProcessedBy()))
                     .orElseThrow(() -> new UserNotFoundException("User with id " + feedbackRequest.getProcessedBy() + " not found"));
+            feedback.setProcessedBy(user);
         }
 
         feedback.setCreatedAt(LocalDateTime.now());
