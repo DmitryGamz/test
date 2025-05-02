@@ -1,11 +1,15 @@
 package gamz.projects.pharmacyfair.model.dto;
 
 import io.micrometer.common.lang.NonNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Getter
+@Builder
 public class FeedbackDTO {
     private final long id;
     @NonNull
@@ -16,6 +20,6 @@ public class FeedbackDTO {
     private final String message;
     private final Boolean isProcessed;
     private final long processedBy;
-    private final String processedAt;
-    private final String createdAt;
+    private final LocalDate processedAt;
+    private final LocalDate createdAt;
 }

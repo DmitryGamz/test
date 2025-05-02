@@ -15,7 +15,6 @@ import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.exception.FeedbackNotFoundException;
 import gamz.projects.pharmacyfair.model.exception.UserNotFoundException;
 import gamz.projects.pharmacyfair.model.mapper.FeedbackMapper;
-import gamz.projects.pharmacyfair.model.request.FeedbackEditRequest;
 import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
 import gamz.projects.pharmacyfair.repository.FeedbackRepository;
 import gamz.projects.pharmacyfair.repository.UserRepository;
@@ -52,22 +51,23 @@ public class FeedbackService {
     public FeedbackDTO createFeedback(FeedbackRequest feedbackRequest) {
         Feedback feedback = feedbackMapper.toFeedbackFromRequest(feedbackRequest);
 
+        if (feedbackRequest.getProcessedBy() != null) {
+            User user = userRepository.findById(Math.toIntExact(feedbackRequest.getProcessedBy()))
+                    .orElseThrow(() -> new UserNotFoundException("User with id " + feedbackRequest.getProcessedBy() + " not found"));
+        }
+
         feedback.setCreatedAt(LocalDateTime.now());
+        if (feedback.getIsProcessed()) {
+            feedback.setProcessedAt(LocalDateTime.now());
+        }
 
         Feedback savedFeedback = feedbackRepository.save(feedback);
         return feedbackMapper.toFeedbackDTO(savedFeedback);
     }
 
-    public FeedbackDTO processFeedback(Long id, User user) {
-        Feedback feedback = feedbackRepository.findById(id)
+    public FeedbackDTO editFeedback(Long id, FeedbackRequest feedbackRequest) {
+        Feedback existingFeedback = feedbackRepository.findById(id)
                 .orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found"));
-        feedback.processedBy = user;
-        Feedback savedFeedback = feedbackRepository.save(feedback);
-        return feedbackMapper.toFeedbackDTO(savedFeedback);
-    }
-
-    public FeedbackDTO editFeedback(Long id, FeedbackEditRequest feedbackRequest) {
-        Feedback existingFeedback = feedbackRepository.findById(id).orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found"));
 
         if (feedbackRequest.getEmail() != null) {
             existingFeedback.setEmail(feedbackRequest.getEmail());
@@ -82,12 +82,14 @@ public class FeedbackService {
         }
 
         if (feedbackRequest.getProcessedBy() != null) {
-            User userPorcessedBy = userRepository.findById( Math.toIntExact(feedbackRequest.getProcessedBy()) ).orElseThrow(() -> new UserNotFoundException("Пользователь с id " + feedbackRequest.getProcessedBy() + " не существует"));
-            existingFeedback.setProcessedBy(userPorcessedBy);
+            User userProcessedBy = userRepository.findById( Math.toIntExact(feedbackRequest.getProcessedBy()) )
+                    .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + feedbackRequest.getProcessedBy() + " не существует"));
+            existingFeedback.setProcessedBy(userProcessedBy);
         }
 
         if (feedbackRequest.getIsProcessed() != null) {
             existingFeedback.setIsProcessed(feedbackRequest.getIsProcessed());
+            existingFeedback.setProcessedAt(LocalDateTime.now());
         }
 
         Feedback savedFeedback = feedbackRepository.save(existingFeedback);

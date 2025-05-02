@@ -13,6 +13,7 @@ import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface FeedbackMapper {
 
+	@Mapping(target = "processedBy.id", source = "processedBy")
     Feedback toFeedbackFromRequest(FeedbackRequest request);
 
 	@Mapping(target = "processedBy", source = "processedBy.id")

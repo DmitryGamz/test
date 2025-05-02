@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gamz.projects.pharmacyfair.model.dto.FeedbackDTO;
 import gamz.projects.pharmacyfair.model.exception.FeedbackNotFoundException;
-import gamz.projects.pharmacyfair.model.request.FeedbackEditRequest;
 import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
 import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
 import gamz.projects.pharmacyfair.model.response.ErrorValidationResponse;
@@ -59,18 +58,17 @@ public class FeedbackController {
 
     @PostMapping
     @Operation(summary = "Создать обратную связь")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<FeedbackDTO> createFeedback(
         @Parameter(description = "Данные обратной связи") @RequestBody @Valid FeedbackRequest request
     ) {
-        return ResponseEntity.ok(feedbackService.createFeedback(request));
+        return ResponseEntity.status(201).body(feedbackService.createFeedback(request));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Обновить обратную связь")
     public ResponseEntity<FeedbackDTO> editFeedback(
         @Parameter(description = "ID обратной связи") @PathVariable Long id,
-        @Parameter(description = "Обновленные данные обратной связи") @RequestBody @Valid FeedbackEditRequest request
+        @Parameter(description = "Обновленные данные обратной связи") @RequestBody FeedbackRequest request
     ) {
         return ResponseEntity.ok(feedbackService.editFeedback(id, request));
     }
@@ -84,7 +82,6 @@ public class FeedbackController {
         return ResponseEntity.noContent().build();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorValidationResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         HashMap <String, String> errors = new HashMap<>();
@@ -98,10 +95,9 @@ public class FeedbackController {
         return ResponseEntity.badRequest().body(ErrorValidationResponse.builder().errors(errors).build());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(FeedbackNotFoundException.class)
     public ResponseEntity<ErrorNotFoundResponse> handleNotFoundExceptions(FeedbackNotFoundException ex) {
         ErrorNotFoundResponse response = ErrorNotFoundResponse.builder().message(ex.getMessage()).build();
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.status(404).body(response);
     }
 }

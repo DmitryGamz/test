@@ -27,4 +27,8 @@ public class FeedbackRequest {
     @Valid
     @NotEmpty(message = "Поле message должно быть заполнено")
     private String message;
+
+    private Long processedBy;
+
+    private Boolean isProcessed;
 }
