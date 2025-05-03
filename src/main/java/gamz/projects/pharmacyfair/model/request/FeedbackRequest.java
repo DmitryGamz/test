@@ -30,5 +30,6 @@ public class FeedbackRequest {
 
     private Long processedBy;
 
-    private Boolean isProcessed;
+    @Builder.Default
+    private Boolean isProcessed = false;
 }
