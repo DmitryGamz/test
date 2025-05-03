@@ -41,7 +41,9 @@ public class SecurityConfig {
 				.authorizeHttpRequests(
 						authorize -> authorize
 								.requestMatchers("/api/v1/auth/**").permitAll()
+								.requestMatchers("/api/v1/feedback/**").permitAll()
 								.requestMatchers(SWAGGER_WHITELIST).permitAll()
+								.requestMatchers("/error").permitAll()
 								.anyRequest().authenticated()
 				)
 				.sessionManagement(session -> session

@@ -26,6 +26,7 @@ public class WebMvcTestConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/v1/fedback/**").permitAll()
 						.anyRequest().authenticated()
 				);
 		

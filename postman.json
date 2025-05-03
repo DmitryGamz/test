@@ -1258,6 +1258,346 @@
       ]
     },
     {
+      "name": "Feedback",
+      "item": [
+        {
+          "name": "Validation",
+          "item": [
+            {
+              "name": "Create Feedback | Empty fields",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "pm.test(\"Response is an object\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData).to.be.an('object');\r",
+                      "});\r",
+                      "pm.test(\"Response.status is error\", function () {\r",
+                      "    const errorResponse = pm.response.json();\r",
+                      "    pm.expect(errorResponse).to.have.property('status');\r",
+                      "    pm.expect(errorResponse.status).to.equals('error');\r",
+                      "});\r",
+                      "// Optional: Check structure of the first item if array is not empty\r",
+                      "pm.test(\"Feedback structure is correct\", function () {\r",
+                      "    const errorResponse = pm.response.json();\r",
+                      "    pm.expect(errorResponse).to.have.property('errors');\r",
+                      "    const errors = errorResponse.errors;\r",
+                      "    pm.expect(errors).to.have.property('name');\r",
+                      "    pm.expect(errors).to.have.property('message');\r",
+                      "    pm.expect(errors).to.have.property('email');\r",
+                      "    // Add other property checks as needed\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{baseUrl}}/api/v1/feedback"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Feedback by ID | Doesn't Exist",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "pm.test(\"Response is an object\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData).to.be.an('object');\r",
+                      "});\r",
+                      "pm.test(\"Response.status is error\", function () {\r",
+                      "    const errorResponse = pm.response.json();\r",
+                      "    pm.expect(errorResponse).to.have.property('status');\r",
+                      "    pm.expect(errorResponse.status).to.equals('error');\r",
+                      "});\r",
+                      "// Optional: Check structure of the first item if array is not empty\r",
+                      "pm.test(\"Not found feedback structure is correct\", function () {\r",
+                      "    const errorResponse = pm.response.json();\r",
+                      "    pm.expect(errorResponse).to.have.property('message');\r",
+                      "    // Add other property checks as needed\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/api/v1/feedback/-1"
+              },
+              "response": []
+            }
+          ],
+          "description": "Check validation errors accured correctly"
+        },
+        {
+          "name": "Get All Feedbacks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.be.an('array');\r",
+                  "});\r",
+                  "// Optional: Check structure of the first item if array is not empty\r",
+                  "pm.test(\"Feedback structure is correct\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    if (jsonData.length > 0) {\r",
+                  "        const firstItem = jsonData[0];\r",
+                  "        pm.expect(firstItem).to.have.property('id');\r",
+                  "        pm.expect(firstItem).to.have.property('name');\r",
+                  "        pm.expect(firstItem).to.have.property('email');\r",
+                  "        pm.expect(firstItem).to.have.property('message');\r",
+                  "        pm.expect(firstItem).to.have.property('isProcessed');\r",
+                  "        pm.expect(firstItem).to.have.property('processedBy');\r",
+                  "        pm.expect(firstItem).to.have.property('processedAt');\r",
+                  "        pm.expect(firstItem).to.have.property('createdAt');\r",
+                  "        // Add other property checks as needed\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/feedback",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "feedback"
+              ],
+              "query": [
+                {
+                  "key": "isProcessed",
+                  "value": "false",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Feedback by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.be.an('object');\r",
+                  "});\r",
+                  "// Optional: Check structure of the first item if array is not empty\r",
+                  "pm.test(\"Feedback structure is correct\", function () {\r",
+                  "    const feedback = pm.response.json();\r",
+                  "    pm.expect(feedback).to.have.property('id');\r",
+                  "    pm.expect(feedback).to.have.property('name');\r",
+                  "    pm.expect(feedback).to.have.property('email');\r",
+                  "    pm.expect(feedback).to.have.property('message');\r",
+                  "    pm.expect(feedback).to.have.property('isProcessed');\r",
+                  "    pm.expect(feedback).to.have.property('processedBy');\r",
+                  "    pm.expect(feedback).to.have.property('processedAt');\r",
+                  "    pm.expect(feedback).to.have.property('createdAt');\r",
+                  "    // Add other property checks as needed\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/feedback/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Feedback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Response is an object\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.be.an('object');\r",
+                  "});\r",
+                  "// Optional: Check structure of the first item if array is not empty\r",
+                  "pm.test(\"Feedback structure is correct\", function () {\r",
+                  "    const feedback = pm.response.json();\r",
+                  "    pm.expect(feedback).to.have.property('id');\r",
+                  "    pm.expect(feedback).to.have.property('name');\r",
+                  "    pm.expect(feedback).to.have.property('email');\r",
+                  "    pm.expect(feedback).to.have.property('message');\r",
+                  "    pm.expect(feedback).to.have.property('isProcessed');\r",
+                  "    pm.expect(feedback).to.have.property('processedBy');\r",
+                  "    pm.expect(feedback).to.have.property('processedAt');\r",
+                  "    pm.expect(feedback).to.have.property('createdAt');\r",
+                  "    // Add other property checks as needed\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Test feedback\",\r\n    \"message\": \"Feedback creation don't work\",\r\n    \"email\": \"test@example.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/feedback"
+          },
+          "response": []
+        },
+        {
+          "name": "Edit Feedback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Response is an object\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.be.an('object');\r",
+                  "});\r",
+                  "// Optional: Check structure of the first item if array is not empty\r",
+                  "pm.test(\"Feedback structure is correct\", function () {\r",
+                  "    const feedback = pm.response.json();\r",
+                  "    pm.expect(feedback).to.have.property('id');\r",
+                  "    pm.expect(feedback).to.have.property('name');\r",
+                  "    pm.expect(feedback).to.have.property('email');\r",
+                  "    pm.expect(feedback).to.have.property('message');\r",
+                  "    pm.expect(feedback).to.have.property('isProcessed');\r",
+                  "    pm.expect(feedback).to.have.property('processedBy');\r",
+                  "    pm.expect(feedback).to.have.property('processedAt');\r",
+                  "    pm.expect(feedback).to.have.property('createdAt');\r",
+                  "    // Add other property checks as needed\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"processedBy\": 1,\r\n    \"isProcessed\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/feedback/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Feedback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/feedback/1"
+          },
+          "response": []
+        }
+      ],
+      "description": "API for managing feedback"
+    },
+    {
       "name": "User",
       "description": "User related endpoints.",
       "item": [

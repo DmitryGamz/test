@@ -82,6 +82,8 @@ public class TestSecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/v1/feedback/**").permitAll()
+						.requestMatchers("/error").permitAll()
 						.anyRequest().authenticated()
 				);
 		
