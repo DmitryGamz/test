@@ -25,8 +25,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_local_seq")
     private long id;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Column(name = "first_name")
@@ -45,6 +47,7 @@ public class User implements UserDetails {
     @Column(name = "job_title")
     private String jobTitle;
 
+    @Column
     private String phone;
 
     @Column(name = "contact_sharing_consent")
