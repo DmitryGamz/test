@@ -22,7 +22,7 @@ CREATE TABLE project_statuses
 CREATE TABLE IPR_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    status_code VARCHAR(30)  NOT NULL UNIQUE,
+    status_code VARCHAR(30) NOT NULL UNIQUE,
     description TEXT
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE IPR_statuses
 CREATE TABLE commercial_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    status_code VARCHAR(30)  NOT NULL UNIQUE,
+    status_code VARCHAR(30) NOT NULL UNIQUE,
     description TEXT
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE commercial_statuses
 CREATE TABLE market_perspectives
 (
     id               BIGSERIAL PRIMARY KEY,
-    perspective_code VARCHAR(50)  NOT NULL UNIQUE,
+    perspective_code VARCHAR(50) NOT NULL UNIQUE,
     description      TEXT
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE market_perspectives
 CREATE TABLE production_requirements
 (
     id               BIGSERIAL PRIMARY KEY,
-    requirement_code VARCHAR(30)  NOT NULL UNIQUE,
+    requirement_code VARCHAR(30) NOT NULL UNIQUE,
     description      TEXT
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE completion_times
 -- Содержит общую информацию о проектах всех типов
 CREATE TABLE projects
 (
-    project_id                    BIGSERIAL PRIMARY KEY,
+    id                            BIGSERIAL PRIMARY KEY,
     user_id                       BIGINT       NOT NULL,   -- Создатель проекта
     product_type_id               BIGINT       NOT NULL,   -- Тип продукта (лекарство, медизделие и т.д.)
     project_name                  VARCHAR(255) NOT NULL,   -- Наименование разработки
