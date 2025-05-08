@@ -3,18 +3,16 @@
 CREATE TABLE product_types
 (
     id          BIGSERIAL PRIMARY KEY,
-    type_name   VARCHAR(100) NOT NULL,
-    description TEXT,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    name        VARCHAR(100) NOT NULL,
+    description TEXT
 );
 
 -- Справочник для статусов проектов
 CREATE TABLE project_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    status_code VARCHAR(20) NOT NULL UNIQUE,
-    status_name VARCHAR(50) NOT NULL,
+    code        VARCHAR(20) NOT NULL UNIQUE,
+    name        VARCHAR(50) NOT NULL,
     description TEXT
 );
 
@@ -22,7 +20,7 @@ CREATE TABLE project_statuses
 CREATE TABLE IPR_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    status_code VARCHAR(30) NOT NULL UNIQUE,
+    code        VARCHAR(30) NOT NULL UNIQUE,
     description TEXT
 );
 
@@ -30,32 +28,32 @@ CREATE TABLE IPR_statuses
 CREATE TABLE commercial_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    status_code VARCHAR(30) NOT NULL UNIQUE,
+    code        VARCHAR(30) NOT NULL UNIQUE,
     description TEXT
 );
 
 -- Справочник для рыночных перспектив
 CREATE TABLE market_perspectives
 (
-    id               BIGSERIAL PRIMARY KEY,
-    perspective_code VARCHAR(50) NOT NULL UNIQUE,
-    description      TEXT
+    id          BIGSERIAL PRIMARY KEY,
+    code        VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
 );
 
 -- Справочник для требований к производству
 CREATE TABLE production_requirements
 (
-    id               BIGSERIAL PRIMARY KEY,
-    requirement_code VARCHAR(30) NOT NULL UNIQUE,
-    description      TEXT
+    id          BIGSERIAL PRIMARY KEY,
+    code        VARCHAR(30) NOT NULL UNIQUE,
+    description TEXT
 );
 
 -- Справочник для сроков завершения
 CREATE TABLE completion_times
 (
     id          BIGSERIAL PRIMARY KEY,
-    time_code   VARCHAR(20) NOT NULL UNIQUE,
-    time_name   VARCHAR(50) NOT NULL,
+    code        VARCHAR(20) NOT NULL UNIQUE,
+    name        VARCHAR(50) NOT NULL,
     description TEXT
 );
 
@@ -66,8 +64,8 @@ CREATE TABLE projects
     id                            BIGSERIAL PRIMARY KEY,
     user_id                       BIGINT       NOT NULL,   -- Создатель проекта
     product_type_id               BIGINT       NOT NULL,   -- Тип продукта (лекарство, медизделие и т.д.)
-    project_name                  VARCHAR(255) NOT NULL,   -- Наименование разработки
-    short_description             TEXT         NOT NULL,   -- Краткое описание
+    name                          VARCHAR(255) NOT NULL,   -- Наименование разработки
+    description                   TEXT         NOT NULL,   -- Краткое описание
     technological_readiness_level INT          NOT NULL,   -- Уровень готовности технологии (УГТ)
     application_scope             VARCHAR(20)  NOT NULL,   -- Область применения (multiple/single)
     status_id                     BIGINT,                  -- Ссылка на справочник статусов

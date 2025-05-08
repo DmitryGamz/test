@@ -8,9 +8,19 @@ CREATE TABLE medication_details
 (
     id         BIGSERIAL PRIMARY KEY,
     project_id BIGINT NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE
+);
+
+-- Таблица лекарственных форм (по Номенклатуре лекарственных форм)
+-- Хранит иерархическую структуру лекарственных форм
+CREATE TABLE medication_forms
+(
+    id        BIGSERIAL PRIMARY KEY,
+    code      VARCHAR(20)  NOT NULL, -- Код формы (например, "1.1.1.1")
+    name      VARCHAR(255) NOT NULL, -- Название формы
+    parent_id BIGINT,                -- NULL для корневых категорий
+    level     INT          NOT NULL, -- Уровень иерархии
+    FOREIGN KEY (parent_id) REFERENCES medication_forms (id) ON DELETE CASCADE
 );
 
 -- Таблица связи лекарственных препаратов и лекарственных форм (многие ко многим)
@@ -23,16 +33,13 @@ CREATE TABLE medication_forms_link
     FOREIGN KEY (form_id) REFERENCES medication_forms (id) ON DELETE CASCADE
 );
 
--- Таблица лекарственных форм (по Номенклатуре лекарственных форм)
--- Хранит иерархическую структуру лекарственных форм
-CREATE TABLE medication_forms
+-- Справочник типов приоритетов для лекарств и медизделий
+CREATE TABLE priority_types
 (
-    id        BIGSERIAL PRIMARY KEY,
-    form_code VARCHAR(20)  NOT NULL, -- Код формы (например, "1.1.1.1")
-    form_name VARCHAR(255) NOT NULL, -- Название формы
-    parent_id BIGINT,                -- NULL для корневых категорий
-    level     INT          NOT NULL, -- Уровень иерархии
-    FOREIGN KEY (parent_id) REFERENCES medication_forms (id) ON DELETE CASCADE
+    id          BIGSERIAL PRIMARY KEY,
+    code        VARCHAR(50)  NOT NULL UNIQUE,
+    name        VARCHAR(100) NOT NULL,
+    description TEXT
 );
 
 -- Таблица связи между деталями лекарств и типами приоритетов
@@ -43,13 +50,4 @@ CREATE TABLE medication_priority_types
     PRIMARY KEY (medication_detail_id, priority_id),
     FOREIGN KEY (medication_detail_id) REFERENCES medication_details (id) ON DELETE CASCADE,
     FOREIGN KEY (priority_id) REFERENCES priority_types (id) ON DELETE CASCADE
-);
-
--- Справочник типов приоритетов для лекарств и медизделий
-CREATE TABLE priority_types
-(
-    id            BIGSERIAL PRIMARY KEY,
-    priority_code VARCHAR(50)  NOT NULL UNIQUE,
-    priority_name VARCHAR(100) NOT NULL,
-    description   TEXT
 );

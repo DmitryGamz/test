@@ -1,4 +1,4 @@
-INSERT INTO medication_forms (form_code, form_name, parent_id, level)
+INSERT INTO medication_forms (code, name, parent_id, level)
 VALUES
     ('1', 'Аэрозоль', NULL, 1),
     ('1.1', 'Аэрозоль для ингаляций дозированный', (SELECT id FROM medication_forms WHERE code = '1'), 2),
@@ -235,7 +235,7 @@ VALUES
     ('23.29', 'Раствор для орошения мочевого пузыря', (SELECT id FROM medication_forms WHERE code = '23'), 2),
     ('23.30', 'Раствор для парабульбарного введения', (SELECT id FROM medication_forms WHERE code = '23'), 2);
 
-INSERT INTO priority_types (priority_code, priority_name, description)
+INSERT INTO priority_types (code, name, description)
 VALUES
     ('MORT', 'Снижение смертности', 'Лекарства и медизделия, направленные на снижение смертности.'),
     ('DISAB', 'Снижение инвалидизации', 'Лекарства и медизделия, направленные на снижение уровня инвалидизации.'),

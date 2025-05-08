@@ -4,14 +4,15 @@ import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name="projects")
 public class Project {
@@ -26,12 +27,16 @@ public class Project {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductType productType;
 
-    private String projectName;
+    @Column(name = "name")
+    private String name;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "technological_readiness_level")
     private int techReadiness;
 
+    @Column(name = "application_scope")
     private String scope;
 
     @ManyToOne
@@ -40,18 +45,19 @@ public class Project {
     @ManyToOne
     private IprStatus iprStatus;
 
+    @Column(name = "ipr_valuation_exists")
     private boolean iprValuationExists;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private CommercialStatus commercialStatus;
 
-    @Column
+    @Column(name = "commercial_effect")
     private String commercialEffect;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private MarketPerspective marketPerspectives;
 
-    @Column
+    @Column(name = "novelty")
     private String novelty;
 
     @Column(name = "key_differences")

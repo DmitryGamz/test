@@ -19,9 +19,9 @@ public class ProductionRequirement {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "production_requirements_local_seq")
     private long id;
 
-    @Column(name="requirement_code", unique = true, nullable = false)
-    private String perspectiveCode;
+    @Column(name="code", unique = true, nullable = false)
+    private String code;
 
-    @Column
+    @Column(name = "description")
     private String description;
 }

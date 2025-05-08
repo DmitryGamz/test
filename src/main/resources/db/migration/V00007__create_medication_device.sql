@@ -6,8 +6,8 @@
 CREATE TABLE risk_classes
 (
     id          BIGSERIAL PRIMARY KEY,
-    class_code  VARCHAR(20) NOT NULL UNIQUE,
-    class_name  VARCHAR(50) NOT NULL,
+    code  VARCHAR(20) NOT NULL UNIQUE,
+    name  VARCHAR(50) NOT NULL,
     description TEXT
 );
 

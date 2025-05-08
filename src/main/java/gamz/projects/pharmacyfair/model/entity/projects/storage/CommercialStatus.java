@@ -19,9 +19,9 @@ public class CommercialStatus {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "commercial_statuses_local_seq")
     private long id;
 
-    @Column(name="status_code", unique = true, nullable = false)
-    private String statusCode;
+    @Column(name="code", unique = true, nullable = false)
+    private String code;
 
-    @Column
+    @Column(name="description")
     private String description;
 }

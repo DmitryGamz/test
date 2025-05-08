@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="completion_times")
-public class CompletionTime {
+@Table(name="risk_classes")
+public class RiskClass {
 
     @Id
-    @SequenceGenerator(name = "completion_times_local_seq", sequenceName = "completion_times_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "completion_times_local_seq")
+    @SequenceGenerator(name = "risk_classes_local_seq", sequenceName = "risk_classes_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "risk_classes_local_seq")
     private long id;
 
-    @Column(name="code", unique = true, nullable = false)
+    @Column(name = "code", unique = true)
     private String code;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "description")

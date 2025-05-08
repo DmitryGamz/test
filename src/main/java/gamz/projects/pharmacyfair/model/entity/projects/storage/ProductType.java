@@ -21,15 +21,9 @@ public class ProductType {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_types_local_seq")
     private long id;
 
-    @Column(name = "type_name")
-    private String typeName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 }
