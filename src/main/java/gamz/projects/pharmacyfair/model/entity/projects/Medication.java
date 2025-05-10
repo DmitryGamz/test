@@ -1,16 +1,25 @@
 package gamz.projects.pharmacyfair.model.entity.projects;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import gamz.projects.pharmacyfair.model.entity.projects.storage.ApplicationAreaMedication;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.MedicationForm;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.PriorityType;
+import gamz.projects.pharmacyfair.model.entity.projects.storage.TechReadinessMedication;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Device.class, name = "device"),
+        @JsonSubTypes.Type(value = Medication.class, name = "medication")
+})
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorValue("medication")
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +34,9 @@ public class Medication extends Project{
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Project project;
+
+    @ManyToOne
+    private TechReadinessMedication techReadiness;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -41,4 +53,12 @@ public class Medication extends Project{
             inverseJoinColumns = @JoinColumn(name = "priority_id")
     )
     private List<PriorityType> priorityTypes;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "medication_application_areas_link",
+            joinColumns = @JoinColumn(name = "medication_detail_id"),
+            inverseJoinColumns = @JoinColumn(name = "application_areas_medication_id")
+    )
+    private List<ApplicationAreaMedication> applicationAreaMedications;
 }

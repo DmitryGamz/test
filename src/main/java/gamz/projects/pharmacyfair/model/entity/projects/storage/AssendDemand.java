@@ -6,23 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="product_types")
-public class ProductType {
+@Table(name="assessment_demand_device")
+public class AssendDemand {
 
     @Id
-    @SequenceGenerator(name = "product_types_local_seq", sequenceName = "product_types_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_types_local_seq")
+    @SequenceGenerator(name = "assessment_demand_device_local_seq", sequenceName = "assessment_demand_device_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assessment_demand_device_local_seq")
     private long id;
-
-    @Column(name = "code")
-    private String code;
 
     @Column(name = "name")
     private String name;

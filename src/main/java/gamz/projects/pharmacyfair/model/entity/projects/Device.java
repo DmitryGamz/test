@@ -1,8 +1,6 @@
 package gamz.projects.pharmacyfair.model.entity.projects;
 
-import gamz.projects.pharmacyfair.model.entity.projects.storage.Nkmi;
-import gamz.projects.pharmacyfair.model.entity.projects.storage.PriorityType;
-import gamz.projects.pharmacyfair.model.entity.projects.storage.RiskClass;
+import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,7 +9,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorValue("device")
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,8 +25,20 @@ public class Device extends Project{
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Project project;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     private RiskClass riskClass;
+
+    @ManyToOne
+    private ProductionRequirement productionRequirements;
+
+    @ManyToOne
+    private TechReadinessDevice techReadiness;
+
+    @ManyToOne
+    private AssendDemand assendDemand;
+
+    @Column(name = "included_in_standards")
+    private boolean includedInStandards;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

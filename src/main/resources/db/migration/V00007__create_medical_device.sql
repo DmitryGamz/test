@@ -2,12 +2,38 @@
 -- ДЕТАЛИ МЕДИЦИНСКИХ ИЗДЕЛИЙ
 -- ============================================================================
 
+-- Таблица областей применения
+-- Общие области применения для медицинских устройств
+CREATE TABLE application_areas_device
+(
+    id     BIGSERIAL PRIMARY KEY,
+    name   VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+-- Таблица оценки востребованности для здравоохранения устройства
+CREATE TABLE assessment_demand_device
+(
+    id     BIGSERIAL PRIMARY KEY,
+    name   VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+-- Таблица УГТ (уровней готовности технологии)
+-- Хранит описания уровней готовности технологии для лекарственных препаратов
+CREATE TABLE medical_device_technology_readiness_levels
+(
+    id          BIGSERIAL PRIMARY KEY,
+    level       INT  NOT NULL, -- Числовое значение уровня (от 1 до 9)
+    description TEXT NOT NULL  -- Описание уровня
+);
+
 -- Справочник для классов риска медицинских изделий
 CREATE TABLE risk_classes
 (
     id          BIGSERIAL PRIMARY KEY,
-    code  VARCHAR(20) NOT NULL UNIQUE,
-    name  VARCHAR(50) NOT NULL,
+    code        VARCHAR(20) NOT NULL UNIQUE,
+    name        VARCHAR(50) NOT NULL,
     description TEXT
 );
 
@@ -15,19 +41,21 @@ CREATE TABLE risk_classes
 -- Содержит все специфические поля для медицинских изделий из Приложения №6
 CREATE TABLE medical_device_details
 (
-    id                    BIGSERIAL PRIMARY KEY,
-    project_id            BIGINT NOT NULL UNIQUE,
+    id                            BIGSERIAL PRIMARY KEY,
+    project_id                    BIGINT NOT NULL UNIQUE,
+    technological_readiness_level BIGINT NOT NULL, -- Уровень готовности технологии (УГТ)
 
     -- Класс риска по НКМИ
-    risk_class_id         BIGINT,
+    risk_class_id                 BIGINT,
+
+    assessment_demand_device_id          BIGINT,
 
     -- Включено ли в клинические рекомендации/стандарты
-    included_in_standards BOOLEAN   DEFAULT FALSE,
+    included_in_standards         BOOLEAN   DEFAULT FALSE,
 
-    created_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
-    FOREIGN KEY (risk_class_id) REFERENCES risk_classes (id)
+    FOREIGN KEY (risk_class_id) REFERENCES risk_classes (id),
+    FOREIGN KEY (technological_readiness_level) REFERENCES medical_device_technology_readiness_levels(id) ON DELETE NO ACTION
 );
 
 -- Таблица связи между деталями медицинских изделий и типами приоритетов

@@ -14,12 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="NKMI_categories")
-public class Nkmi {
+@Table(name="application_areas_medication")
+public class ApplicationAreaMedication {
 
     @Id
-    @SequenceGenerator(name = "NKMI_categories_local_seq", sequenceName = "NKMI_categories_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NKMI_categories_local_seq")
+    @SequenceGenerator(name = "application_areas_medication_local_seq", sequenceName = "application_areas_medication_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_areas_medication_local_seq")
     private long id;
 
     @Column(unique = true)
@@ -35,9 +35,9 @@ public class Nkmi {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "medical_device_NKMI_link",
-            joinColumns = @JoinColumn(name = "nkmi_id"),
-            inverseJoinColumns = @JoinColumn(name = "medical_device_detail_id")
+            name = "medication_application_areas_link",
+            joinColumns = @JoinColumn(name = "application_areas_medication_id"),
+            inverseJoinColumns = @JoinColumn(name = "medication_detail_id")
     )
     private List<Device> devices;
 }

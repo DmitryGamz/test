@@ -1,9 +1,11 @@
 package gamz.projects.pharmacyfair.model.entity.projects;
 
+import gamz.projects.pharmacyfair.model.entity.Organization;
 import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,7 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED) // Каждый подкласс — в своей таблице
+@DiscriminatorColumn(name = "project_type")
 @Entity
 @Table(name="projects")
 public class Project {
@@ -27,17 +30,18 @@ public class Project {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductType productType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Organization organization;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "technological_readiness_level")
-    private int techReadiness;
-
-    @Column(name = "application_scope")
-    private String scope;
+    @ManyToOne
+    @JoinColumn(name = "application_scope_id")
+    private Scope scope;
 
     @ManyToOne
     private ProjectStatus projectStatus;
@@ -72,6 +76,14 @@ public class Project {
     @ManyToOne
     private CompletionTime completionTime;
 
-    @Column(name = "has_students_involved")
-    private Boolean hasStudentsInvolved;
+    @ManyToOne
+    private StudentsInvolved studentsInvolved;
+
+    @OneToOne
+    @Builder.Default
+    private Device device = null;
+
+    @OneToOne
+    @Builder.Default
+    private Medication medication = null;
 }

@@ -22,6 +22,9 @@ public class IprStatus {
     @Column(name="code", unique = true, nullable = false)
     private String code;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "description")
     private String description;
 }
