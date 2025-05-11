@@ -1,10 +1,9 @@
 package gamz.projects.pharmacyfair.controller;
 
-import gamz.projects.pharmacyfair.model.dto.ProjectDTO;
+import gamz.projects.pharmacyfair.model.dto.MedicationDTO;
 import gamz.projects.pharmacyfair.model.entity.projects.Device;
 import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import gamz.projects.pharmacyfair.service.ProjectService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/projects")
@@ -31,5 +28,15 @@ public class ProjectController {
         } else {
             return ResponseEntity.ok("medication");
         }
+    }
+
+    /**
+     * Create empty project by code of type
+     * @param code
+     * @return DTO of new project
+     */
+    @GetMapping("/create/empty/{code}")
+    public ResponseEntity<?> createEmptyProject(@PathVariable String code) {
+        return ResponseEntity.ok(projectService.createEmptyProject(code));
     }
 }

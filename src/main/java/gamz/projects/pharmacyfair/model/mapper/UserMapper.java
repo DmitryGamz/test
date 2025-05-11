@@ -16,11 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserMapper {
 
-    //@Mapping(target = "organization", expression = "java(userDTO.getOrganization())")
-    //User toUserFromDTO(UserDTO userDTO);
-
     @Mapping(source = "roles", target = "roles")
-    @Mapping(source = "organization", target = "organization")// Явное указание для Roles
+    @Mapping(source = "organization", target = "organization")
     UserDTO toUserDTOFromUser(User user);
 
     User toUserFromRegisterRequest(RegisterRequest request);

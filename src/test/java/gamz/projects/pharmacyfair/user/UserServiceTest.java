@@ -1,4 +1,4 @@
-package gamz.projects.pharmacyfair.users;
+package gamz.projects.pharmacyfair.user;
 
 import gamz.projects.pharmacyfair.repository.UserRepository;
 import gamz.projects.pharmacyfair.service.UserService;

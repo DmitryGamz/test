@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IprStatusRepository extends CrudRepository<IprStatus,Integer> {
+public interface IprStatusRepository extends CrudRepository<IprStatus,Long> {
     Optional<IprStatus> findByCode(String code);
 }

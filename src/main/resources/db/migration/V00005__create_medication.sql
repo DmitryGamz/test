@@ -27,12 +27,11 @@ CREATE TABLE medication_technology_readiness_levels
 -- Содержит все специфические поля для лекарственных препаратов из Приложения №5
 CREATE TABLE medication_details
 (
-    id                            BIGSERIAL PRIMARY KEY,
-    project_id                    BIGINT NOT NULL UNIQUE,
-    technological_readiness_level BIGINT NOT NULL, -- Уровень готовности технологии (УГТ)
+    id                            BIGINT PRIMARY KEY,
+    technological_readiness_level_id BIGINT NOT NULL, -- Уровень готовности технологии (УГТ)
 
-    FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
-    FOREIGN KEY (technological_readiness_level) REFERENCES medication_technology_readiness_levels (id) ON DELETE NO ACTION
+    FOREIGN KEY (id) REFERENCES projects (id) ON DELETE CASCADE,
+    FOREIGN KEY (technological_readiness_level_id) REFERENCES medication_technology_readiness_levels (id) ON DELETE NO ACTION
 );
 
 -- Таблица лекарственных форм (по Номенклатуре лекарственных форм)

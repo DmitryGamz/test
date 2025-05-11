@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProjectStatusRepository extends CrudRepository<ProjectStatus,Integer> {
+public interface ProjectStatusRepository extends CrudRepository<ProjectStatus,Long> {
     Optional<ProjectStatus> findByCode(String code);
 }

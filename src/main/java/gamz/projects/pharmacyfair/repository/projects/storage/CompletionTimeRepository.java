@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CompletionTimeRepository extends CrudRepository<CompletionTime,Integer> {
+public interface CompletionTimeRepository extends CrudRepository<CompletionTime,Long> {
     Optional<CompletionTime> findByCode(String code);
 }

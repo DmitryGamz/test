@@ -27,8 +27,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     runtimeOnly("org.postgresql:postgresql")
+    testImplementation("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
@@ -39,6 +41,8 @@ dependencies {
 
     //Inner Docker Compose
     runtimeOnly("org.springframework.boot:spring-boot-docker-compose")
+    testImplementation("org.springframework.boot:spring-boot-docker-compose")
+
 
     //Lombok
     compileOnly("org.projectlombok:lombok")

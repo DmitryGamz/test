@@ -6,16 +6,16 @@
 -- Общие области применения для медицинских устройств
 CREATE TABLE application_areas_device
 (
-    id     BIGSERIAL PRIMARY KEY,
-    name   VARCHAR(255) NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
     description TEXT
 );
 
 -- Таблица оценки востребованности для здравоохранения устройства
 CREATE TABLE assessment_demand_device
 (
-    id     BIGSERIAL PRIMARY KEY,
-    name   VARCHAR(255) NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
     description TEXT
 );
 
@@ -41,21 +41,20 @@ CREATE TABLE risk_classes
 -- Содержит все специфические поля для медицинских изделий из Приложения №6
 CREATE TABLE medical_device_details
 (
-    id                            BIGSERIAL PRIMARY KEY,
-    project_id                    BIGINT NOT NULL UNIQUE,
-    technological_readiness_level BIGINT NOT NULL, -- Уровень готовности технологии (УГТ)
+    id                               BIGINT PRIMARY KEY,
+    technological_readiness_level_id BIGINT, -- Уровень готовности технологии (УГТ)
 
     -- Класс риска по НКМИ
-    risk_class_id                 BIGINT,
+    risk_class_id                    BIGINT,
 
-    assessment_demand_device_id          BIGINT,
+    assessment_demand_device_id      BIGINT,
 
     -- Включено ли в клинические рекомендации/стандарты
-    included_in_standards         BOOLEAN   DEFAULT FALSE,
+    included_in_standards            BOOLEAN DEFAULT FALSE,
 
-    FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES projects (id) ON DELETE CASCADE,
     FOREIGN KEY (risk_class_id) REFERENCES risk_classes (id),
-    FOREIGN KEY (technological_readiness_level) REFERENCES medical_device_technology_readiness_levels(id) ON DELETE NO ACTION
+    FOREIGN KEY (technological_readiness_level_id) REFERENCES medical_device_technology_readiness_levels (id) ON DELETE NO ACTION
 );
 
 -- Таблица связи между деталями медицинских изделий и типами приоритетов

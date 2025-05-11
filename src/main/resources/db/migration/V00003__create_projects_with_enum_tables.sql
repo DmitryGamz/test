@@ -3,7 +3,7 @@
 CREATE TABLE product_types
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -12,7 +12,7 @@ CREATE TABLE product_types
 CREATE TABLE project_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -21,7 +21,7 @@ CREATE TABLE project_statuses
 CREATE TABLE IPR_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -30,7 +30,7 @@ CREATE TABLE IPR_statuses
 CREATE TABLE commercial_statuses
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -39,7 +39,7 @@ CREATE TABLE commercial_statuses
 CREATE TABLE market_perspectives
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -48,7 +48,7 @@ CREATE TABLE market_perspectives
 CREATE TABLE production_requirements
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -76,7 +76,7 @@ CREATE TABLE scope
 CREATE TABLE students_involved
 (
     id          BIGSERIAL PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL UNIQUE,
+    code        VARCHAR(20)  NOT NULL UNIQUE,
     name        VARCHAR(100) NOT NULL,
     description TEXT
 );
@@ -88,10 +88,10 @@ CREATE TABLE projects
     id                        BIGSERIAL PRIMARY KEY,
     user_id                   BIGINT       NOT NULL,   -- Создатель проекта
     product_type_id           BIGINT       NOT NULL,   -- Тип продукта (лекарство, медизделие и т.д.)
-    organization_id           BIGINT       NOT NULL,   -- Ссылка на учреждение
+    organization_id           BIGINT,                  -- Ссылка на учреждение
     name                      VARCHAR(255) NOT NULL,   -- Наименование разработки
-    description               TEXT         NOT NULL,   -- Краткое описание
-    application_scope_id         BIGINT       NOT NULL,   -- Ссылка на область применения
+    description               TEXT,                    -- Краткое описание
+    application_scope_id      BIGINT,                  -- Ссылка на область применения
     status_id                 BIGINT,                  -- Ссылка на справочник статусов
 
     -- Данные о РИД и товарных знаках
@@ -114,7 +114,7 @@ CREATE TABLE projects
     completion_time_id        BIGINT,                  -- Ссылка на справочник сроков завершения
 
     -- Участие студентов
-    students_involved_id     BIGINT,
+    students_involved_id      BIGINT,
 
     -- Системные поля
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

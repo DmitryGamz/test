@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MarketPerspectiveRepository extends CrudRepository<MarketPerspective,Integer> {
+public interface MarketPerspectiveRepository extends CrudRepository<MarketPerspective,Long> {
     Optional<MarketPerspective> findByCode(String code);
 }

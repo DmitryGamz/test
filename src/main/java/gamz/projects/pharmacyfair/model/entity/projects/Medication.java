@@ -1,44 +1,31 @@
 package gamz.projects.pharmacyfair.model.entity.projects;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.ApplicationAreaMedication;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.MedicationForm;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.PriorityType;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.TechReadinessMedication;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Device.class, name = "device"),
-        @JsonSubTypes.Type(value = Medication.class, name = "medication")
-})
-@Data
-@EqualsAndHashCode(callSuper = true)
-@DiscriminatorValue("medication")
-@SuperBuilder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="medication_details")
 public class Medication extends Project{
-
-    @Id
-    @SequenceGenerator(name = "medication_details_local_seq", sequenceName = "medication_details_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_details_local_seq")
-    private long id;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id") // будет и PK, и FK
     private Project project;
 
     @ManyToOne
+    @JoinColumn(name = "technological_readiness_level_id")
     private TechReadinessMedication techReadiness;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "medication_forms_link",
             joinColumns = @JoinColumn(name = "medication_detail_id"),
@@ -46,7 +33,7 @@ public class Medication extends Project{
     )
     private List<MedicationForm> forms;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "medication_priority_types",
             joinColumns = @JoinColumn(name = "medication_detail_id"),
@@ -54,7 +41,7 @@ public class Medication extends Project{
     )
     private List<PriorityType> priorityTypes;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "medication_application_areas_link",
             joinColumns = @JoinColumn(name = "medication_detail_id"),

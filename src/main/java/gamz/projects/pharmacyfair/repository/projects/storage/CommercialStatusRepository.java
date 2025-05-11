@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CommercialStatusRepository extends CrudRepository<CommercialStatus,Integer> {
+public interface CommercialStatusRepository extends CrudRepository<CommercialStatus,Long> {
     Optional<CommercialStatus> findByCode(String code);
 }
 
