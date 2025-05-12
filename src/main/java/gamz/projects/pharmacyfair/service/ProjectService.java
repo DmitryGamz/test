@@ -43,6 +43,12 @@ public class ProjectService {
     private final CompletionTimeRepository completionTimeRepository;
     private final RiskClassRepository riskClassRepository;
     private final TechReadinessDeviceRepository techReadinessDeviceRepository;
+    private final AssendDemandRepository assendDemandRepository;
+    private final TechReadinessMedicationRepository techReadinessMedicationRepository;
+    private final ApplicationAreaMedicationRepository applicationAreaMedicationRepository;
+    private final MedicationFormRepository medicationFormRepository;
+    private final PriorityTypeRepository priorityTypeRepository;
+    private final NkmiRepository nkmiRepository;
 
     /*
         Block of enum-table elements
@@ -195,25 +201,75 @@ public class ProjectService {
                         "TechReadinessDevice not found with id: " + id));
     }
 
-    public TechReadinessDevice getTechReadinessDeviceByCode(String code) {
-        return techReadinessDeviceRepository.findByCode(code)
+    // ------------------------------------------------
+
+    public TechReadinessMedication getTechReadinessMedicationById(Long id) {
+        return techReadinessMedicationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "TechReadinessDevice not found with code: " + code));
+                        "TechReadinessMedication not found with id: " + id));
     }
 
     // ------------------------------------------------
-
     public AssendDemand getAssendDemandById(Long id) {
         return assendDemandRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(
                         "AssendDemand not found with id: " + id));
     }
 
-    // Если у AssendDemand есть уникальный код, то можно добавить метод поиска по коду
-    public AssendDemand getAssendDemandByCode(String code) {
-        return assendDemandRepository.findByCode(code)
+    // ------------------------------------------------
+
+    public ApplicationAreaMedication getApplicationAreaMedicationById (Long id) {
+        return applicationAreaMedicationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "AssendDemand not found with code: " + code));
+                        "ApplicationAreaMedication not found with id: " + id));
+    }
+
+    public ApplicationAreaMedication getApplicationAreaMedicationByCode(String code) {
+        return applicationAreaMedicationRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "ApplicationAreaMedication not found with code: " + code));
+    }
+
+    // ------------------------------------------------
+
+    public MedicationForm getMedicationFormById (Long id) {
+        return medicationFormRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "MedicationForm not found with id: " + id));
+    }
+
+    public MedicationForm getMedicationFormByCode(String code) {
+        return medicationFormRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "MedicationForm not found with code: " + code));
+    }
+
+    // ------------------------------------------------
+
+    public PriorityType getPriorityTypeById (Long id) {
+        return priorityTypeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "PriorityType not found with id: " + id));
+    }
+
+    public PriorityType getPriorityTypeByCode(String code) {
+        return priorityTypeRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "PriorityType not found with code: " + code));
+    }
+
+    // ------------------------------------------------
+
+    public Nkmi getNkmiById (Long id) {
+        return nkmiRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Nkmi not found with id: " + id));
+    }
+
+    public Nkmi getNkmiByCode(String code) {
+        return nkmiRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Nkmi not found with code: " + code));
     }
 
     /*

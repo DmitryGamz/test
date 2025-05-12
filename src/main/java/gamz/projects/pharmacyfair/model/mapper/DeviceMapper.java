@@ -8,6 +8,10 @@ import gamz.projects.pharmacyfair.service.ProjectService;
 import gamz.projects.pharmacyfair.service.UserService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING ,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -17,6 +21,7 @@ public abstract class DeviceMapper {
     private UserService userService;
 
     @Autowired
+    @Lazy
     private ProjectService projectService;
 
     @Mapping(source = "id", target = "id")
@@ -34,13 +39,13 @@ public abstract class DeviceMapper {
     @Mapping(source = "novelty", target = "novelty")
     @Mapping(source = "keyDifferences", target = "keyDifferences")
     @Mapping(source = "exportPotential", target = "exportPotential")
-    @Mapping(source = "studentsInvolved.id", target = "hasStudentsInvolved")
+    @Mapping(source = "studentsInvolved.id", target = "hasStudentsInvolvedId")
     @Mapping(source = "riskClass.id", target = "riskClassId")
     @Mapping(source = "techReadiness.id", target = "techReadinessId")
     @Mapping(source = "assendDemand.id", target = "assessmentDemandId")
     @Mapping(source = "includedInStandards", target = "includedInStandards")
-    @Mapping(expression = "java(device.getPriorityTypes().stream().map(pt -> pt.getId()).collect(Collectors.toList()))", target = "priorityTypeIds")
-    @Mapping(expression = "java(device.getNkmis().stream().map(nk -> nk.getId()).collect(Collectors.toList()))", target = "nkmiIds")
+    @Mapping(source = "priorityTypes", target = "priorityTypeIds", qualifiedByName = "mapPriorityTypeIds")
+    @Mapping(source = "nkmis", target = "nkmiIds", qualifiedByName = "mapNkmiIds")
     public abstract DeviceDTO fromDeviceToDto(Device device);
 
     @Mapping(source = "id", target = "id")
@@ -51,12 +56,12 @@ public abstract class DeviceMapper {
     @Mapping(source = "iprStatusId", target = "iprStatus", qualifiedByName = "mapIprStatus")
     @Mapping(source = "commercialStatusId", target = "commercialStatus", qualifiedByName = "mapCommercialStatus")
     @Mapping(source = "marketPerspectivesId", target = "marketPerspectives", qualifiedByName = "mapMarketPerspective")
-    @Mapping(source = "hasStudentsInvolved", target = "studentsInvolved", qualifiedByName = "mapStudentsInvolved")
+    @Mapping(source = "hasStudentsInvolvedId", target = "studentsInvolved", qualifiedByName = "mapStudentsInvolved")
     @Mapping(source = "riskClassId", target = "riskClass", qualifiedByName = "mapRiskClass")
     @Mapping(source = "techReadinessId", target = "techReadiness", qualifiedByName = "mapTechReadiness")
     @Mapping(source = "assessmentDemandId", target = "assendDemand", qualifiedByName = "mapAssendDemand")
-    @Mapping(target = "priorityTypes", expression = "java(deviceDto.getPriorityTypeIds().stream().map(ptRepo::getReferenceById).collect(Collectors.toList()))")
-    @Mapping(target = "nkmis", expression = "java(deviceDto.getNkmiIds().stream().map(projectRepo::getReferenceById).collect(Collectors.toList()))")
+    @Mapping(source = "priorityTypeIds", target = "priorityTypes", qualifiedByName = "mapPriorityTypeList")
+    @Mapping(source = "nkmiIds", target = "nkmis", qualifiedByName = "mapNkmiList")
     public abstract Device fromDtoToDevice(DeviceDTO dto);
 
     @Named("mapUser")
@@ -102,6 +107,34 @@ public abstract class DeviceMapper {
     @Named("mapAssendDemand")
     protected AssendDemand mapAssendDemand(Long id) {
         return id == null ? null : projectService.getAssendDemandById(id);
+    }
+
+    @Named("mapPriorityTypeIds")
+    protected List<Long> mapPriorityTypeIds(List<PriorityType> priorityTypes) {
+        return priorityTypes == null ? null : priorityTypes.stream()
+                .map(PriorityType::getId)
+                .toList();
+    }
+
+    @Named("mapNkmiIds")
+    protected List<Long> mapNkmiIds(List<Nkmi> nkmis) {
+        return nkmis == null ? null : nkmis.stream()
+                .map(Nkmi::getId)
+                .toList();
+    }
+
+    @Named("mapPriorityTypeList")
+    protected List<PriorityType> mapPriorityTypeList(List<Long> ids) {
+        return ids == null ? null : ids.stream()
+                .map(projectService::getPriorityTypeById)
+                .toList();
+    }
+
+    @Named("mapNkmiList")
+    protected List<Nkmi> mapNkmiList(List<Long> ids) {
+        return ids == null ? null : ids.stream()
+                .map(projectService::getNkmiById)
+                .toList();
     }
 
 }

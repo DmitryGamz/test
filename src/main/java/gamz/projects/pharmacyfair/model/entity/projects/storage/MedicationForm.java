@@ -22,6 +22,18 @@ public class MedicationForm {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_forms_local_seq")
     private long id;
 
+    @Column(name="code", unique = true, nullable = false)
+    private String code;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @OneToMany
+    private List<MedicationForm> children;
+
+    @ManyToOne
+    private MedicationForm parent;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "medication_forms_link",
