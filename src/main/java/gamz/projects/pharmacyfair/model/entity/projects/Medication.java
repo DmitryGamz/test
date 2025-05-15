@@ -18,7 +18,7 @@ import java.util.List;
 public class Medication extends Project{
     @OneToOne
     @MapsId
-    @JoinColumn(name = "id") // будет и PK, и FK
+    @JoinColumn(name = "id")
     private Project project;
 
     @ManyToOne

@@ -1,6 +1,5 @@
 package gamz.projects.pharmacyfair.controller;
 
-import gamz.projects.pharmacyfair.model.exception.UserAlreadyExistException;
 import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;

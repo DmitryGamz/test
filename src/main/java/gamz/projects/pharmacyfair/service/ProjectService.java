@@ -8,7 +8,6 @@ import gamz.projects.pharmacyfair.model.entity.projects.Device;
 import gamz.projects.pharmacyfair.model.entity.projects.Medication;
 import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
-import gamz.projects.pharmacyfair.model.exception.ProjectNotFoundException;
 import gamz.projects.pharmacyfair.model.mapper.DeviceMapper;
 import gamz.projects.pharmacyfair.model.mapper.MedicationMapper;
 import gamz.projects.pharmacyfair.repository.DeviceRepository;
@@ -29,8 +28,6 @@ public class ProjectService {
     private final UserService userService;
 
     private final ProjectRepository projectRepository;
-    private final DeviceRepository deviceRepository;
-    private final MedicationRepository medicationRepository;
 
     private final ProductTypeRepository productTypeRepository;
     private final ProjectStatusRepository projectStatusRepository;
@@ -272,28 +269,10 @@ public class ProjectService {
                         "Nkmi not found with code: " + code));
     }
 
-    /*
-    Блок транзакций
-     */
-
-    @Transactional
-    public Project save(Project project) {
-        return projectRepository.save(project);
-    }
-
-    @Transactional(readOnly = true)
-    public Project findById(Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found"));
-    }
-
-    /*
-     Блок CRUD
-     */
-
     @Transactional
     public Object createEmptyProject(String code) {
         User user = userService.getUserBySecurityContext();
-        ProductType productType = productTypeRepository.findByCode(code)
+        ProductType productType = productTypeRepository.findByCode(code.toUpperCase())
                 .orElseThrow(() -> new IllegalArgumentException("Unsupported project type: " + code));
 
         // Создаём нужный подкласс проекта

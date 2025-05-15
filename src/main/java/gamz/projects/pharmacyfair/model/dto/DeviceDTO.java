@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 public class DeviceDTO {
-    private long id;
+    private Long id;
     private long userId;
     private long productTypeId;
     private String name;
