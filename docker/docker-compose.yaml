@@ -1,6 +1,8 @@
 services:
   postgres:
-    restart: always
+    # always если нужно сохранять данные
+    # no во время разработки, стирался и создавался заново
+    restart: no
     image: postgres:latest
     ports:
       - '5432:5432'

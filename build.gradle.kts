@@ -30,16 +30,19 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     runtimeOnly("org.postgresql:postgresql")
+    testImplementation("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation ("com.h2database:h2")
-    implementation ("com.h2database:h2")
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     //Inner Docker Compose
     runtimeOnly("org.springframework.boot:spring-boot-docker-compose")
+    testImplementation("org.springframework.boot:spring-boot-docker-compose")
+
 
     //Lombok
     compileOnly("org.projectlombok:lombok")
@@ -64,6 +67,7 @@ dependencies {
 
     //servlet
     compileOnly("javax.servlet:servlet-api:3.0-alpha-1")
+
 
 }
 

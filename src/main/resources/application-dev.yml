@@ -18,11 +18,12 @@ spring:
       schema: public
 
   jpa:
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: none
+        format_sql: true
 
   flyway:
     driver-class-name: org.postgresql.Driver
@@ -35,8 +36,18 @@ spring:
       file: docker/docker-compose.yaml
 
 logging:
-  level.gamz.projects.*: DEBUG
-  level.org.springframework.security: DEBUG
+  level:
+    gamz:
+      projects.*: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread]: %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.sss} [%thread] %-5level %logger{36}: %msg%n"
