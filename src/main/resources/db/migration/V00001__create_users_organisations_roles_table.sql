@@ -1,18 +1,18 @@
 -- Таблица организаций
 CREATE TABLE IF NOT EXISTS organizations
 (
-    id BIGSERIAL PRIMARY KEY,
-    name            VARCHAR(255) NOT NULL,
-    description     TEXT,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id          BIGSERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Таблица ролей пользователей
 -- Хранит определения ролей из Приложения №2 ТЗ (Администратор, Эксперт, Оператор и др.)
 CREATE TABLE IF NOT EXISTS roles
 (
-    id     BIGSERIAL PRIMARY KEY,
+    id          BIGSERIAL PRIMARY KEY,
     role_name   VARCHAR(50) NOT NULL,
     description TEXT
 );
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS roles
 -- Хранит данные всех пользователей системы
 CREATE TABLE IF NOT EXISTS users
 (
-    id                 BIGSERIAL PRIMARY KEY,
+    id                      BIGSERIAL PRIMARY KEY,
     email                   VARCHAR(100) NOT NULL UNIQUE,      -- Логин пользователя (согласно ТЗ - это email)
     password                VARCHAR(255) NOT NULL,             -- Изменено с password_hash на password
     first_name              VARCHAR(100) NOT NULL,
@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS users
 -- Позволяет гибко назначать роли пользователям (один пользователь может иметь несколько ролей)
 CREATE TABLE IF NOT EXISTS user_roles
 (
-    user_id      BIGINT NOT NULL,
-    role_id      BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (role_id) REFERENCES roles (id)
 );

@@ -4,15 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
     @SequenceGenerator(name = "roles_local_seq", sequenceName = "roles_id_seq", allocationSize = 1)
