@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import gamz.projects.pharmacyfair.model.dto.LicenseCategoryDTO;
-import gamz.projects.pharmacyfair.model.exception.LicenseCategoryNotFoundException;
 import gamz.projects.pharmacyfair.model.request.LicenseCategoryRequest;
-import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
 import gamz.projects.pharmacyfair.service.LicenseCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -84,11 +81,5 @@ public class LicenseCategoryController {
     ) {
         licenseCategoryService.deleteLicenseCategory(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(LicenseCategoryNotFoundException.class)
-    public ResponseEntity<ErrorNotFoundResponse> handleNotFoundExceptions(LicenseCategoryNotFoundException ex) {
-        ErrorNotFoundResponse response = ErrorNotFoundResponse.builder().message(ex.getMessage()).build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

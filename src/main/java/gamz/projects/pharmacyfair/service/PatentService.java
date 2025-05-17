@@ -8,7 +8,7 @@ import java.util.stream.StreamSupport;
 import gamz.projects.pharmacyfair.model.dto.PatentDTO;
 import gamz.projects.pharmacyfair.model.entity.Patent;
 import gamz.projects.pharmacyfair.model.entity.PatentType;
-import gamz.projects.pharmacyfair.model.entity.Project;
+import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import gamz.projects.pharmacyfair.model.exception.PatentNotFoundException;
 import gamz.projects.pharmacyfair.model.exception.PatentTypeNotFoundException;
 import gamz.projects.pharmacyfair.model.mapper.PatentMapper;
@@ -31,7 +31,7 @@ public class PatentService {
 	public List<PatentDTO> getAllPatents() {
 		return StreamSupport.stream(patentRepository.findAll().spliterator(), false)
 				.map(patentMapper::toPatentDTO)
-				.collect(Collectors.toList());
+				.toList();
 	}
 	
 	public PatentDTO getPatentById(Long id) {
@@ -43,13 +43,13 @@ public class PatentService {
 	public List<PatentDTO> getPatentsByProjectId(Long projectId) {
 		return patentRepository.findByProjectId(projectId).stream()
 				.map(patentMapper::toPatentDTO)
-				.collect(Collectors.toList());
+				.toList();
 	}
 	
 	public List<PatentDTO> getPatentsByPatentTypeId(Long patentTypeId) {
 		return patentRepository.findByPatentTypeId(patentTypeId).stream()
 				.map(patentMapper::toPatentDTO)
-				.collect(Collectors.toList());
+				.toList();
 	}
 	
 	public PatentDTO createPatent(PatentRequest patentRequest) {

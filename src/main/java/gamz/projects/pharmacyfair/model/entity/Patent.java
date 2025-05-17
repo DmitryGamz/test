@@ -3,6 +3,7 @@ package gamz.projects.pharmacyfair.model.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

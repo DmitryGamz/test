@@ -1,4 +1,4 @@
-package gamz.projects.pharmacyfair.service;
+package gamz.projects.pharmacyfair.service.components;
 
 import gamz.projects.pharmacyfair.model.exception.BeansContextException;
 import gamz.projects.pharmacyfair.model.exception.NotFoundException;

@@ -1,6 +1,7 @@
 package gamz.projects.pharmacyfair.service;
 
 import gamz.projects.pharmacyfair.model.dto.ReferenceDTO;
+import gamz.projects.pharmacyfair.service.components.EntityFetcher;
 import gamz.projects.pharmacyfair.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,27 +54,26 @@ public class ReferenceService {
         ReferenceDTO.ReferenceDTOBuilder builder = ReferenceDTO.builder()
                 .type(entity.getClass().getSimpleName());
 
-        // Считаем, что id всегда есть
         if (wrapper.isReadableProperty("id")) {
             builder.id((Long) wrapper.getPropertyValue("id"));
         }
-        // Читаем code, если есть
+
         if (wrapper.isReadableProperty("code")) {
             builder.code((String) wrapper.getPropertyValue("code"));
         }
-        // Читаем description, если есть
+
         if (wrapper.isReadableProperty("description")) {
             builder.description((String) wrapper.getPropertyValue("description"));
         }
-        // Читаем level, если есть
+
         if (wrapper.isReadableProperty("level")) {
             builder.level((String) wrapper.getPropertyValue("level"));
         }
-        // Читаем name, если есть
+
         if (wrapper.isReadableProperty("name")) {
             builder.name((String) wrapper.getPropertyValue("name"));
         }
-        // Читаем parentId, если есть
+
         if (wrapper.isReadableProperty("parentId")) {
             builder.parentId((Long) wrapper.getPropertyValue("parentId"));
         }

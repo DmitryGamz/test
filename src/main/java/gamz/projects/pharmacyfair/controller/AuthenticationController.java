@@ -4,6 +4,8 @@ import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
 import gamz.projects.pharmacyfair.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,20 +22,23 @@ public class AuthenticationController {
 	private final AuthenticationService service;
 	
 	@PostMapping("/register")
+	@Operation(summary = "Зарегистрировать пользователя")
 	public ResponseEntity<AuthenticationResponse> register(
-			@RequestBody RegisterRequest request
+			@Parameter(description = "Данные для регистрации") @RequestBody RegisterRequest request
 	) {
 		return ResponseEntity.ok(service.register(request));
 	}
 	
 	@PostMapping("/authenticate")
+	@Operation(summary = "Аутентифицировать пользователя")
 	public ResponseEntity<AuthenticationResponse> authenticate(
-			@RequestBody AuthenticationRequest request
+			@Parameter(description = "Данные для аутентификации (email, пароль)") @RequestBody AuthenticationRequest request
 	) {
 		return ResponseEntity.ok(service.authenticate(request));
 	}
 	
 	@GetMapping("/clear")
+	@Operation(summary = "Сбросить аутентификацию")
 	public ResponseEntity<String> clearAuthentication() {
 		service.clearAuthentication();
 		return ResponseEntity.ok("You successfully cleared the authentication.");

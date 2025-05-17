@@ -1,9 +1,7 @@
 package gamz.projects.pharmacyfair.controller;
 
 import gamz.projects.pharmacyfair.model.dto.PharmaceuticalLicenseDTO;
-import gamz.projects.pharmacyfair.model.exception.PharmaceuticalLicenseNotFoundException;
 import gamz.projects.pharmacyfair.model.request.PharmaceuticalLicenseRequest;
-import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
 import gamz.projects.pharmacyfair.service.PharmaceuticalLicenseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,11 +75,5 @@ public class PharmaceuticalLicenseController {
     ) {
         pharmaceuticalLicenseService.deleteLicenseById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(PharmaceuticalLicenseNotFoundException.class)
-    public ResponseEntity<ErrorNotFoundResponse> handleLicenseTypeNotFoundException(PharmaceuticalLicenseNotFoundException ex) {
-        ErrorNotFoundResponse response = ErrorNotFoundResponse.builder().message(ex.getMessage()).build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

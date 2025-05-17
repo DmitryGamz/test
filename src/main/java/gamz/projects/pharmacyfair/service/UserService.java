@@ -36,18 +36,15 @@ public class UserService {
             return userDetails;
         }
         else {
-            // principal не является UserDetails, возможно, это анонимный пользователь или что-то другое
             throw new UserNotFoundException("Authentication failure");
         }
     }
 
     @Transactional(readOnly = true, propagation = Propagation.MANDATORY)
     public Page<UserDTO> findAllByPage(int page, int size) {
-        // Проверка на валидность параметров
         if (page < 0 || size <= 0) {
             throw new IllegalArgumentException("Invalid page or size");
         }
-        // Используем PageRequest для пагинации
         Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
 
         Page<User> usersPage = userRepository.findAll(pageable);

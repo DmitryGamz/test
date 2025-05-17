@@ -39,7 +39,7 @@ public class FeedbackService {
         }
         return StreamSupport.stream(feedbackList, false)
                 .map(feedbackMapper::toFeedbackDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public FeedbackDTO getFeedbackById (Long id) {
@@ -52,7 +52,7 @@ public class FeedbackService {
         Feedback feedback = feedbackMapper.toFeedbackFromRequest(feedbackRequest);
 
         if (feedbackRequest.getProcessedBy() != null) {
-            User user = userRepository.findById(Math.toIntExact(feedbackRequest.getProcessedBy()))
+            User user = userRepository.findById(feedbackRequest.getProcessedBy())
                     .orElseThrow(() -> new UserNotFoundException("User with id " + feedbackRequest.getProcessedBy() + " not found"));
             feedback.setProcessedBy(user);
         } else {
@@ -60,7 +60,7 @@ public class FeedbackService {
         }
 
         feedback.setCreatedAt(LocalDateTime.now());
-        if (feedback.getIsProcessed() == true) {
+        if (feedback.getIsProcessed()) {
             feedback.setProcessedAt(LocalDateTime.now());
         }
 
@@ -85,7 +85,7 @@ public class FeedbackService {
         }
 
         if (feedbackRequest.getProcessedBy() != null) {
-            User userProcessedBy = userRepository.findById( Math.toIntExact(feedbackRequest.getProcessedBy()) )
+            User userProcessedBy = userRepository.findById(feedbackRequest.getProcessedBy())
                     .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + feedbackRequest.getProcessedBy() + " не существует"));
             existingFeedback.setProcessedBy(userProcessedBy);
         }

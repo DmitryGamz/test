@@ -6,6 +6,7 @@ import gamz.projects.pharmacyfair.model.entity.Role;
 import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 

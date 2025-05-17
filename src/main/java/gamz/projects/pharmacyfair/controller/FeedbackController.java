@@ -1,14 +1,10 @@
 package gamz.projects.pharmacyfair.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gamz.projects.pharmacyfair.model.dto.FeedbackDTO;
-import gamz.projects.pharmacyfair.model.exception.FeedbackNotFoundException;
 import gamz.projects.pharmacyfair.model.request.FeedbackRequest;
-import gamz.projects.pharmacyfair.model.response.ErrorNotFoundResponse;
-import gamz.projects.pharmacyfair.model.response.ErrorValidationResponse;
 import gamz.projects.pharmacyfair.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -78,24 +71,5 @@ public class FeedbackController {
     ) {
         feedbackService.deleteFeedback(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorValidationResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        HashMap <String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return ResponseEntity.badRequest().body(ErrorValidationResponse.builder().errors(errors).build());
-    }
-
-    @ExceptionHandler(FeedbackNotFoundException.class)
-    public ResponseEntity<ErrorNotFoundResponse> handleNotFoundExceptions(FeedbackNotFoundException ex) {
-        ErrorNotFoundResponse response = ErrorNotFoundResponse.builder().message(ex.getMessage()).build();
-        return ResponseEntity.status(404).body(response);
     }
 }
