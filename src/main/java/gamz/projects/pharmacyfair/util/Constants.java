@@ -45,4 +45,8 @@ public class Constants {
             Map.entry("MedicationForm", MedicationForm.class),
             Map.entry("TechReadinessMedication", TechReadinessMedication.class)
     );
+
+    public enum SettingType {
+        STRING, NUMBER, BOOLEAN, JSON
+    }
 }

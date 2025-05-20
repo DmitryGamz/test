@@ -1,5 +1,6 @@
 plugins {
     java
+    war
     id("org.springframework.boot") version "3.4.5"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -28,6 +29,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.postgresql:postgresql")
@@ -64,13 +66,21 @@ dependencies {
 
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
-
-    //servlet
-    compileOnly("javax.servlet:servlet-api:3.0-alpha-1")
-
-
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks {
+    processResources {
+        from("src/main/docker") {
+            into("docker")
+        }
+        from("src/main/resources/static") {
+            into("static")
+        }
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        filteringCharset = "UTF-8"
+    }
 }

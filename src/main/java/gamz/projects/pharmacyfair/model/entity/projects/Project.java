@@ -5,6 +5,7 @@ import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED) // Каждый подкласс — в своей таблице
 @Entity
+@SuperBuilder
 @Table(name="projects")
 public class Project {
     @Id

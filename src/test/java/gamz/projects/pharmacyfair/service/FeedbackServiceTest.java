@@ -163,9 +163,8 @@ public class FeedbackServiceTest {
     void testCreateFeedback() {
         // Arrange
         Long userId = feedbackRequest.getProcessedBy();
-        Integer intUserId = Math.toIntExact(userId);
         when(feedbackMapper.toFeedbackFromRequest(feedbackRequest)).thenReturn(feedback);
-        when(userRepository.findById(intUserId)).thenReturn(Optional.of(user));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(feedbackRepository.save(any(Feedback.class))).thenReturn(feedback);
         when(feedbackMapper.toFeedbackDTO(feedback)).thenReturn(feedbackDTO);
 
@@ -176,7 +175,7 @@ public class FeedbackServiceTest {
         assertNotNull(result);
         assertEquals(feedbackDTO, result);
         verify(feedbackRepository, times(1)).save(any(Feedback.class));
-        verify(userRepository, times(1)).findById(intUserId);
+        verify(userRepository, times(1)).findById(userId);
         verify(feedbackMapper, times(1)).toFeedbackDTO(feedback);
     }
 
@@ -185,14 +184,13 @@ public class FeedbackServiceTest {
     void testCreateFeedback_UserNotFound() {
         // Arrange
         long userId = 999L; // non existent user
-        Integer intUserId = Math.toIntExact(userId);
         feedbackRequest.setProcessedBy(userId);
         when(feedbackMapper.toFeedbackFromRequest(feedbackRequest)).thenReturn(feedback);
-        when(userRepository.findById(intUserId)).thenReturn(Optional.empty());
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(UserNotFoundException.class, () -> feedbackService.createFeedback(feedbackRequest));
-        verify(userRepository, times(1)).findById(intUserId);
+        verify(userRepository, times(1)).findById(userId);
         verify(feedbackRepository, never()).save(any(Feedback.class));
     }
 
@@ -238,7 +236,7 @@ public class FeedbackServiceTest {
 
         when(feedbackRepository.findById(id)).thenReturn(Optional.of(existingFeedback));
         when(feedbackRepository.save(any(Feedback.class))).thenReturn(updatedFeedback);
-        when(userRepository.findById(Math.toIntExact(processedByUserId))).thenReturn(Optional.of(user));
+        when(userRepository.findById(processedByUserId)).thenReturn(Optional.of(user));
         when(feedbackMapper.toFeedbackDTO(updatedFeedback)).thenReturn(updatedFeedbackDTO);
 
         // Act
@@ -271,16 +269,15 @@ public class FeedbackServiceTest {
         // Arrange
         Long feedbackId = 1L;
         long userId = 999L;
-        Integer intUserId = Math.toIntExact(userId);
         FeedbackRequest feedbackEditRequest_NonExistingUser = feedbackRequest;
         feedbackEditRequest_NonExistingUser.setProcessedBy(userId);
         when(feedbackRepository.findById(feedbackId)).thenReturn(Optional.of(feedback));
-        when(userRepository.findById( intUserId )).thenReturn(Optional.empty());
+        when(userRepository.findById( userId )).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(UserNotFoundException.class, () -> feedbackService.editFeedback(feedbackId, feedbackEditRequest_NonExistingUser));
         verify(feedbackRepository, times(1)).findById(feedbackId);
-        verify(userRepository, times(1)).findById(intUserId);
+        verify(userRepository, times(1)).findById(userId);
         verify(feedbackRepository, never()).save(any(Feedback.class));
     }
 
