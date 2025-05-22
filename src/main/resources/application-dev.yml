@@ -33,7 +33,7 @@ spring:
   docker:
     compose:
       enabled: true
-      file: docker/docker-compose.yaml
+      file: classpath:docker/docker-compose.yaml
 
 logging:
   level:
@@ -54,3 +54,9 @@ logging:
   file:
     name: logs/dev/application.log
     path: logs/dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

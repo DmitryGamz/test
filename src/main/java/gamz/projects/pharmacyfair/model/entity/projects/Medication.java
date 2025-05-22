@@ -6,6 +6,7 @@ import gamz.projects.pharmacyfair.model.entity.projects.storage.PriorityType;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.TechReadinessMedication;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SuperBuilder
 @Table(name="medication_details")
 public class Medication extends Project{
     @OneToOne

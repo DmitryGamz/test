@@ -3,6 +3,7 @@ package gamz.projects.pharmacyfair.model.entity.projects;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SuperBuilder
 @Table(name="medical_device_details")
 public class Device extends Project {
     @OneToOne

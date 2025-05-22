@@ -9,7 +9,7 @@ import java.util.Optional;
 import gamz.projects.pharmacyfair.model.dto.PatentDTO;
 import gamz.projects.pharmacyfair.model.entity.Patent;
 import gamz.projects.pharmacyfair.model.entity.PatentType;
-import gamz.projects.pharmacyfair.model.entity.Project;
+import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import gamz.projects.pharmacyfair.model.exception.PatentNotFoundException;
 import gamz.projects.pharmacyfair.model.exception.PatentTypeNotFoundException;
 import gamz.projects.pharmacyfair.model.mapper.PatentMapper;
@@ -64,7 +64,7 @@ class PatentServiceTest {
 		// Set up test data
 		project = Project.builder()
 				.id(1L)
-				.projectName("Test Project")
+				.name("Test Project")
 				.build();
 		
 		patentType = PatentType.builder()
