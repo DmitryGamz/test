@@ -5,10 +5,8 @@ import gamz.projects.pharmacyfair.model.entity.Organization;
 import gamz.projects.pharmacyfair.model.entity.Role;
 import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import gamz.projects.pharmacyfair.model.request.UserRequest;
+import org.mapstruct.*;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
 		unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -20,6 +18,8 @@ public interface UserMapper {
     UserDTO toUserDTOFromUser(User user);
 
     User toUserFromRegisterRequest(RegisterRequest request);
+
+    void updateUserFromDTO(UserRequest request, @MappingTarget User user);
 
     // Methods from User to UserDTO
     default String roleToString(Role role) {

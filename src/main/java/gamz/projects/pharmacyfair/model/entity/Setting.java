@@ -18,7 +18,8 @@ public class Setting {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "settings_local_seq")
     private long id;
 
-    //private String key;
+    @Column(nullable = false, unique = true)
+    private String key;
 
     @Column(nullable = false)
     private String value;

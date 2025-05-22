@@ -8,6 +8,7 @@ import gamz.projects.pharmacyfair.service.ReferenceService;
 import gamz.projects.pharmacyfair.service.impl.DeviceServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,8 @@ public class DeviceController {
         return ResponseEntity.ok(deviceMapper.fromDeviceToDto(device));
     }
 
-    @Operation(summary = "Создать или обновить (автосохранение)")
+    @Operation(summary = "Создать или обновить (автосохранение)",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("/save/{id}")
     public ResponseEntity<DeviceDTO> save(@Parameter(description = "Данные по проекту на сохранение (обновление)") @RequestBody @Valid DeviceDTO deviceDTO,
                                           @PathVariable Long id) {
@@ -55,7 +57,8 @@ public class DeviceController {
                 .body(deviceMapper.fromDeviceToDto(saved));
     }
 
-    @Operation(summary = "Удалить медицинское устройство по ID")
+    @Operation(summary = "Удалить медицинское устройство по ID",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@Parameter(description = "ID медицинского изделия") @PathVariable Long id) {
         deviceService.deleteById(id);

@@ -7,6 +7,7 @@ import gamz.projects.pharmacyfair.model.mapper.MedicationMapper;
 import gamz.projects.pharmacyfair.service.ReferenceService;
 import gamz.projects.pharmacyfair.service.impl.MedicationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,8 @@ public class MedicationController {
         return ResponseEntity.ok(medicationMapper.fromMedicationToDto(med));
     }
 
-    @Operation(summary = "Создать или обновить (автосохранение)")
+    @Operation(summary = "Создать или обновить (автосохранение)",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("save/{id}")
     public ResponseEntity<MedicationDTO> save(@RequestBody @Valid MedicationDTO medicationDTO,
                                               @PathVariable Long id) {
@@ -52,7 +54,8 @@ public class MedicationController {
                 .body(medicationMapper.fromMedicationToDto(saved));
     }
 
-    @Operation(summary = "Удалить лекарственное изделие по ID")
+    @Operation(summary = "Удалить лекарственное изделие по ID",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         medicationService.deleteById(id);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
-@Tag(name = "Projects", description = "API for basic methods with projects")
+@Tag(name = "Projects controller", description = "API для базовых методов с проектами")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -23,6 +23,7 @@ public class ProjectController {
      * @return DTO of new project
      */
     @GetMapping("/create/empty/{code}")
+    @Tag(name = "Создать проект без типа")
     public ResponseEntity<?> createEmptyProject(@PathVariable String code) {
         return ResponseEntity.ok(projectService.createEmptyProject(code));
     }

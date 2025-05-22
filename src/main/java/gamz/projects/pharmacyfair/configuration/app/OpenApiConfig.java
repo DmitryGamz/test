@@ -7,12 +7,12 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "My API", version = "v1"))
-@SecurityScheme(
-        name = "bearerAuth",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
+@OpenAPIDefinition(info = @Info(
+        title = "API для цифрового сопровождения конкурса разработок в сфере медицины",
+        version = "v1",
+        description = "API для цифрового сопровождения конкурса разработок. Реализует регистрацию участников, " +
+                "прием и обработку поданных проектов/заявок индустриальных партнеров, и многостороннее " +
+                "взаимодействие участников мероприятия друг с другом и с организаторами."))
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class OpenApiConfig {
 }

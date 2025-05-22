@@ -6,6 +6,7 @@ import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
 import gamz.projects.pharmacyfair.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication Controller", description = "API для работы с авторизацией/регистрацией пользователя")
 public class AuthenticationController {
 	
 	private final AuthenticationService service;
@@ -41,6 +43,6 @@ public class AuthenticationController {
 	@Operation(summary = "Сбросить аутентификацию")
 	public ResponseEntity<String> clearAuthentication() {
 		service.clearAuthentication();
-		return ResponseEntity.ok("You successfully cleared the authentication.");
+		return ResponseEntity.ok("Вы успешно вышли из системы.");
 	}
 }
