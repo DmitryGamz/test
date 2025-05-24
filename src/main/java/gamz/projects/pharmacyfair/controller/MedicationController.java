@@ -8,6 +8,7 @@ import gamz.projects.pharmacyfair.service.ReferenceService;
 import gamz.projects.pharmacyfair.service.impl.MedicationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/projects/medications")
 @RequiredArgsConstructor
+@Tag(name = "Medication controller", description = "API для управления лекарственными препаратами")
 public class MedicationController {
 
     private final MedicationServiceImpl medicationService;

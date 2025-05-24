@@ -11,23 +11,25 @@ import java.util.List;
 @Setter
 public class MedicationDTO {
     private Long id;
-    private long userId;
-    private long productTypeId;
+    private UserDTO user;
+    private ReferenceDTO productType;
     private String name;
     private String description;
-    private long scopeId;
-    private long projectStatusId;
-    private long iprStatusId;
+    private ReferenceDTO scope;
+    private ReferenceDTO projectStatus;
+    private ReferenceDTO iprStatus;
     private boolean iprValuationExists;
-    private long commercialStatusId;
+    private ReferenceDTO commercialStatus;
     private String commercialEffect;
     private long marketPerspectivesId;
     private String novelty;
     private String keyDifferences;
     private Boolean exportPotential;
-    private long hasStudentsInvolvedId;
-    private long techReadinessId;
-    private List<Long> formIds;
-    private List<Long> priorityTypeIds;
-    private List<Long> applicationAreaMedicationIds;
+    private ReferenceDTO hasStudentsInvolved;
+    private ReferenceDTO techReadiness;
+    private String presentationFilePath;
+    private List<ReferenceDTO> form;
+    private List<ReferenceDTO> priorityType;
+    private List<ReferenceDTO> applicationAreaMedication;
+    private List<ReferenceDTO> presentationFormats;
 }

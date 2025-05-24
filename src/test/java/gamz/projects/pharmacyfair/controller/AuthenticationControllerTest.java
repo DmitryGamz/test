@@ -6,6 +6,7 @@ import gamz.projects.pharmacyfair.model.exception.UserNotFoundException;
 import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
+import gamz.projects.pharmacyfair.model.response.RegistrationResponse;
 import gamz.projects.pharmacyfair.service.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +45,7 @@ class AuthenticationControllerTest {
 	private RegisterRequest registerRequest;
 	private AuthenticationRequest authRequest;
 	private AuthenticationResponse authResponse;
+	private RegistrationResponse registrationResponse;
 	
 	@BeforeEach
 	void setUp() {
@@ -56,17 +58,15 @@ class AuthenticationControllerTest {
 		authRequest = new AuthenticationRequest();
 		authRequest.setEmail("test@example.com");
 		authRequest.setPassword("password123");
-		
-		authResponse = AuthenticationResponse.builder()
-				.token("jwtToken")
-				.build();
+
+		registrationResponse = new RegistrationResponse("", authRequest.getEmail());
 	}
 	
 	@Test
 	@DisplayName("Should register user successfully")
 	void register_Success() throws Exception {
 		// Arrange
-		when(authenticationService.register(any(RegisterRequest.class))).thenReturn(authResponse);
+		when(authenticationService.register(any(RegisterRequest.class))).thenReturn(registrationResponse);
 		
 		// Act & Assert
 		mockMvc.perform(post("/api/v1/auth/register")

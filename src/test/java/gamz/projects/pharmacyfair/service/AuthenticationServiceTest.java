@@ -12,6 +12,7 @@ import gamz.projects.pharmacyfair.model.mapper.UserMapper;
 import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
+import gamz.projects.pharmacyfair.model.response.RegistrationResponse;
 import gamz.projects.pharmacyfair.repository.RoleRepository;
 import gamz.projects.pharmacyfair.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,11 +103,10 @@ class AuthenticationServiceTest {
 		when(jwtService.generateToken(user)).thenReturn("jwtToken");
 		
 		// Act
-		AuthenticationResponse response = authenticationService.register(registerRequest);
+		RegistrationResponse response = authenticationService.register(registerRequest);
 		
 		// Assert
 		assertNotNull(response);
-		assertEquals("jwtToken", response.getToken());
 		verify(userRepository, times(1)).findByEmail("test@example.com");
 		verify(passwordEncoder, times(1)).encode("password");
 		verify(userMapper, times(1)).toUserFromRegisterRequest(any(RegisterRequest.class));

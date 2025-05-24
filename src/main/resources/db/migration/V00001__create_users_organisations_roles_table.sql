@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS users
     phone                   VARCHAR(20),                       -- Контактный телефон
     contact_sharing_consent BOOLEAN     DEFAULT FALSE,         -- Согласие на разглашение контактных данных
     participation_status    VARCHAR(20) DEFAULT 'PENDING',     -- Статус заявки на участие: pending/approved/rejected
-    verification_status     VARCHAR(20) DEFAULT 'VERIFICATED', -- Статус верификации: verificated/unverificated
+    verification_status     VARCHAR(20) DEFAULT 'UNVERIFIED', -- Статус верификации: verificated/unverificated
     last_login              TIMESTAMP,                         -- Время последнего входа
     is_active               BOOLEAN     DEFAULT TRUE,          -- Флаг активности учетной записи
     avatar_path             VARCHAR(255),                      -- Путь к файлу аватара

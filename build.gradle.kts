@@ -1,5 +1,6 @@
 plugins {
     java
+    war
     id("org.springframework.boot") version "3.4.5"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -43,6 +44,8 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-docker-compose")
 
+    //Email
+    implementation("org.springframework.boot:spring-boot-starter-mail")
 
     //Lombok
     compileOnly("org.projectlombok:lombok")
@@ -65,13 +68,22 @@ dependencies {
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
-    //servlet
-    compileOnly("javax.servlet:servlet-api:3.0-alpha-1")
-
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+tasks {
+    processResources {
+        from("src/main/docker") {
+            into("docker")
+        }
+        from("src/main/resources/static") {
+            into("static")
+        }
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        filteringCharset = "UTF-8"
+    }
 }

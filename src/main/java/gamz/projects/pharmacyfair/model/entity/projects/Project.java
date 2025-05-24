@@ -3,9 +3,12 @@ package gamz.projects.pharmacyfair.model.entity.projects;
 import gamz.projects.pharmacyfair.model.entity.Organization;
 import gamz.projects.pharmacyfair.model.entity.User;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
+import gamz.projects.pharmacyfair.model.entity.projects.storage.PresentationFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -85,6 +88,17 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "students_involved_id")
     private StudentsInvolved studentsInvolved;
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_presentation_formats",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "format_id")
+    )
+    private List<PresentationFormat> presentationFormats;
+
+    @Column(name = "presentation_file_path")
+    private String presentationFilePath;
 
     @OneToOne(mappedBy = "project", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Device device;

@@ -3,17 +3,14 @@ package gamz.projects.pharmacyfair.controller;
 import gamz.projects.pharmacyfair.model.request.AuthenticationRequest;
 import gamz.projects.pharmacyfair.model.request.RegisterRequest;
 import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
+import gamz.projects.pharmacyfair.model.response.RegistrationResponse;
 import gamz.projects.pharmacyfair.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -25,7 +22,7 @@ public class AuthenticationController {
 	
 	@PostMapping("/register")
 	@Operation(summary = "Зарегистрировать пользователя")
-	public ResponseEntity<AuthenticationResponse> register(
+	public ResponseEntity<RegistrationResponse> register(
 			@Parameter(description = "Данные для регистрации") @RequestBody RegisterRequest request
 	) {
 		return ResponseEntity.ok(service.register(request));
@@ -44,5 +41,13 @@ public class AuthenticationController {
 	public ResponseEntity<String> clearAuthentication() {
 		service.clearAuthentication();
 		return ResponseEntity.ok("Вы успешно вышли из системы.");
+	}
+
+	@GetMapping("/verify")
+	@Operation(summary = "Верифицировать аккаунт")
+	public ResponseEntity<String> verifyAccount(
+			@Parameter(description = "Токен для верификации") @RequestParam String token) {
+		service.verify(token);
+		return ResponseEntity.ok("Аккаунт верифицирован. Вы успешно подтвердили email.");
 	}
 }

@@ -49,4 +49,6 @@ public class Constants {
     public enum SettingType {
         STRING, NUMBER, BOOLEAN, JSON
     }
+
+    public static final String BASE_URL = "http://localhost:8080/";
 }

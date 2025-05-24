@@ -9,6 +9,7 @@ import gamz.projects.pharmacyfair.service.impl.DeviceServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/projects/devices")
 @RequiredArgsConstructor
+@Tag(name = "Device controller", description = "API для управления медицинскими изделиями")
 public class DeviceController {
 
     private final DeviceServiceImpl deviceService;

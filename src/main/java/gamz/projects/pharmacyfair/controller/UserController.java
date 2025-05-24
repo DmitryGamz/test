@@ -5,6 +5,7 @@ import gamz.projects.pharmacyfair.model.request.ChangePasswordRequest;
 import gamz.projects.pharmacyfair.model.request.UserRequest;
 import gamz.projects.pharmacyfair.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 	private final UserService userService;
 
