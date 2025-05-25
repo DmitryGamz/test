@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeviceDTO {
     private Long id;
-    private UserDTO user;
+    private UserProjectDTO user;
     private ReferenceDTO productType;
     private String name;
     private String description;
@@ -27,13 +27,13 @@ public class DeviceDTO {
     private Boolean exportPotential;
     private ReferenceDTO productionRequirements;
     private ReferenceDTO completionTime;
-    private ReferenceDTO hasStudentsInvolved;
+    private ReferenceDTO studentsInvolved;
     private ReferenceDTO riskClass;
     private ReferenceDTO techReadiness;
     private ReferenceDTO assessmentDemand;
     private boolean includedInStandards;
     private String presentationFilePath;
-    private List<Long> priorityTypeIds;
-    private List<Long> nkmiIds;
+    private List<ReferenceDTO> priorityTypes;
+    private List<ReferenceDTO> nkmis;
     private List<ReferenceDTO> presentationFormats;
 }

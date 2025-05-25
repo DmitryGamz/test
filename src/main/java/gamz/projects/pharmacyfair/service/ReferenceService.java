@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +81,65 @@ public class ReferenceService {
         }
 
         return builder.build();
+    }
+
+    public Object fromDtoToEntity(ReferenceDTO dto) {
+        if (dto == null || dto.getType() == null) {
+            return null;
+        }
+
+        Class<?> clazz = getClassFromType(dto.getType());
+
+        try {
+            Object entity = clazz.getDeclaredConstructor().newInstance();
+            BeanWrapper wrapper = new BeanWrapperImpl(entity);
+
+            if (dto.getId() != null && wrapper.isWritableProperty("id")) {
+                wrapper.setPropertyValue("id", dto.getId());
+            }
+
+            if (dto.getCode() != null && wrapper.isWritableProperty("code")) {
+                wrapper.setPropertyValue("code", dto.getCode());
+            }
+
+            if (dto.getDescription() != null && wrapper.isWritableProperty("description")) {
+                wrapper.setPropertyValue("description", dto.getDescription());
+            }
+
+            if (dto.getLevel() != null && wrapper.isWritableProperty("level")) {
+                wrapper.setPropertyValue("level", dto.getLevel());
+            }
+
+            if (dto.getName() != null && wrapper.isWritableProperty("name")) {
+                wrapper.setPropertyValue("name", dto.getName());
+            }
+
+            if (dto.getParentId() != 0 && wrapper.isWritableProperty("parentId")) {
+                wrapper.setPropertyValue("parentId", dto.getParentId());
+            }
+
+            return entity;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create entity for type: " + dto.getType(), e);
+        }
+    }
+
+    private Class<?> getClassFromType(String type) {
+        Map<String, Class<?>> referenceMap = Stream.of(
+                        Constants.referenceNamesMedicationMap,
+                        Constants.referenceNamesDeviceMap
+                ).flatMap(map -> map.entrySet().stream())
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().toLowerCase(),
+                        Map.Entry::getValue,
+                        (first, second) -> first
+                ));
+
+        Class<?> clazz = referenceMap.get(type.toLowerCase());
+        if (clazz == null) {
+            throw new IllegalArgumentException("Unknown reference type: " + type);
+        }
+        return clazz;
     }
 }

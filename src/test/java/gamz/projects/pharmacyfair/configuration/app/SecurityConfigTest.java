@@ -6,6 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,21 +27,21 @@ public class SecurityConfigTest {
 	
 	@Test
 	public void accessToSecuredEndpointShouldBeDeniedForUnauthenticatedUser() throws Exception {
-		mockMvc.perform(get("/api/v1/patent-types"))
+		mockMvc.perform(get("/api/v1/projects/medications/get-all"))
 				.andExpect(status().isForbidden());
 	}
 	
 	@Test
 	@WithMockUser(roles = "USER")
 	public void accessToSecuredEndpointShouldBeAllowedForUserRole() throws Exception {
-		mockMvc.perform(get("/api/v1/patent-types"))
+		mockMvc.perform(get("/api/v1/projects/medications/get-all"))
 				.andExpect(status().isOk());
 	}
 	
 	@Test
 	@WithMockUser(roles = "ADMIN")
 	public void accessToSecuredEndpointShouldBeAllowedForAdminRole() throws Exception {
-		mockMvc.perform(get("/api/v1/patent-types"))
-				.andExpect(status().isOk());
+		mockMvc.perform(delete("/api/v1/projects/medications/delete/1"))
+				.andExpect(status().isNoContent());
 	}
 }

@@ -3,7 +3,7 @@ package gamz.projects.pharmacyfair.controller;
 import gamz.projects.pharmacyfair.model.dto.MedicationDTO;
 import gamz.projects.pharmacyfair.model.dto.ReferenceDTO;
 import gamz.projects.pharmacyfair.model.entity.projects.Medication;
-import gamz.projects.pharmacyfair.model.mapper.MedicationMapper;
+import gamz.projects.pharmacyfair.model.mapper.ProjectMapper;
 import gamz.projects.pharmacyfair.service.ReferenceService;
 import gamz.projects.pharmacyfair.service.impl.MedicationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,24 +25,26 @@ import java.util.List;
 public class MedicationController {
 
     private final MedicationServiceImpl medicationService;
-    private final MedicationMapper medicationMapper;
+    private final ProjectMapper mapper;
     private final ReferenceService referenceService;
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Получить все лекарственные изделия")
     @GetMapping("/get-all")
     public ResponseEntity<List<MedicationDTO>> getAll() {
         List<Medication> meds = medicationService.findAll();
         List<MedicationDTO> dtos = meds.stream()
-                .map(medicationMapper::fromMedicationToDto)
+                .map(mapper::fromMedicationToDto)
                 .toList();
         return ResponseEntity.ok(dtos);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Получить лекарственное изделие по ID")
     @GetMapping("/get/{id}")
     public ResponseEntity<MedicationDTO> getById(@PathVariable Long id) {
         Medication med = medicationService.findById(id);
-        return ResponseEntity.ok(medicationMapper.fromMedicationToDto(med));
+        return ResponseEntity.ok(mapper.fromMedicationToDto(med));
     }
 
     @Operation(summary = "Создать или обновить (автосохранение)",
@@ -53,12 +56,13 @@ public class MedicationController {
         Medication saved = medicationService.saveDto(medicationDTO);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(medicationMapper.fromMedicationToDto(saved));
+                .body(mapper.fromMedicationToDto(saved));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Удалить лекарственное изделие по ID",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         medicationService.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -3,7 +3,7 @@ package gamz.projects.pharmacyfair.controller;
 import gamz.projects.pharmacyfair.model.dto.DeviceDTO;
 import gamz.projects.pharmacyfair.model.dto.ReferenceDTO;
 import gamz.projects.pharmacyfair.model.entity.projects.Device;
-import gamz.projects.pharmacyfair.model.mapper.DeviceMapper;
+import gamz.projects.pharmacyfair.model.mapper.ProjectMapper;
 import gamz.projects.pharmacyfair.service.ReferenceService;
 import gamz.projects.pharmacyfair.service.impl.DeviceServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ import java.util.List;
 public class DeviceController {
 
     private final DeviceServiceImpl deviceService;
-    private final DeviceMapper deviceMapper;
+    private final ProjectMapper mapper;
     private final ReferenceService referenceService;
 
     @Operation(summary = "Получить все устройства")
@@ -33,7 +33,7 @@ public class DeviceController {
     public ResponseEntity<List<DeviceDTO>> getAll() {
         List<Device> devices = deviceService.findAll();
         List<DeviceDTO> dtos = devices.stream()
-                .map(deviceMapper::fromDeviceToDto)
+                .map(mapper::fromDeviceToDto)
                 .toList();
         return ResponseEntity.ok(dtos);
     }
@@ -42,7 +42,7 @@ public class DeviceController {
     @GetMapping("/get/{id}")
     public ResponseEntity<DeviceDTO> getById(@Parameter(description = "ID медицинского изделия") @PathVariable Long id) {
         Device device = deviceService.findById(id);
-        return ResponseEntity.ok(deviceMapper.fromDeviceToDto(device));
+        return ResponseEntity.ok(mapper.fromDeviceToDto(device));
     }
 
     @Operation(summary = "Создать или обновить (автосохранение)",
@@ -56,7 +56,7 @@ public class DeviceController {
         Device saved = deviceService.saveDto(deviceDTO);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(deviceMapper.fromDeviceToDto(saved));
+                .body(mapper.fromDeviceToDto(saved));
     }
 
     @Operation(summary = "Удалить медицинское устройство по ID",

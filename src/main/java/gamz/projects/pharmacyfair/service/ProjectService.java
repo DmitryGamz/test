@@ -8,10 +8,7 @@ import gamz.projects.pharmacyfair.model.entity.projects.Device;
 import gamz.projects.pharmacyfair.model.entity.projects.Medication;
 import gamz.projects.pharmacyfair.model.entity.projects.Project;
 import gamz.projects.pharmacyfair.model.entity.projects.storage.*;
-import gamz.projects.pharmacyfair.model.mapper.DeviceMapper;
-import gamz.projects.pharmacyfair.model.mapper.MedicationMapper;
-import gamz.projects.pharmacyfair.repository.DeviceRepository;
-import gamz.projects.pharmacyfair.repository.MedicationRepository;
+import gamz.projects.pharmacyfair.model.mapper.ProjectMapper;
 import gamz.projects.pharmacyfair.repository.ProjectRepository;
 import gamz.projects.pharmacyfair.repository.projects.storage.*;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 public class ProjectService {
-    private final DeviceMapper deviceMapper;
-    private final MedicationMapper medicationMapper;
+    private final ProjectMapper mapper;
+
     private final UserService userService;
 
     private final ProjectRepository projectRepository;
@@ -302,11 +299,11 @@ public class ProjectService {
     Блок преобразований
      */
     private MedicationDTO convertToMedicationDTO(Medication medication) {
-        return medicationMapper.fromMedicationToDto(medication);
+        return mapper.fromMedicationToDto(medication);
     }
 
     private DeviceDTO convertToDeviceDTO(Device device) {
-        return deviceMapper.fromDeviceToDto(device);
+        return mapper.fromDeviceToDto(device);
     }
 
 

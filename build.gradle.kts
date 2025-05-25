@@ -37,6 +37,7 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation ("com.h2database:h2")
+    testImplementation("org.mockito:mockito-inline:4.11.0")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -69,7 +70,6 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 tasks.withType<Test> {

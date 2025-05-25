@@ -16,6 +16,9 @@ CREATE TABLE project_presentation_formats
 ALTER TABLE projects
     ADD COLUMN presentation_file_path VARCHAR(255);
 
+ALTER TABLE organizations
+    ADD COLUMN logo_path VARCHAR(255);
+
 INSERT INTO presentation_formats (name)
 VALUES ('Презентация'),
        ('Выставочный образец'),

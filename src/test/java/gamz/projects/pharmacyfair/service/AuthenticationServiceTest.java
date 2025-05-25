@@ -15,6 +15,7 @@ import gamz.projects.pharmacyfair.model.response.AuthenticationResponse;
 import gamz.projects.pharmacyfair.model.response.RegistrationResponse;
 import gamz.projects.pharmacyfair.repository.RoleRepository;
 import gamz.projects.pharmacyfair.repository.UserRepository;
+import gamz.projects.pharmacyfair.repository.VerificationTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,10 @@ class AuthenticationServiceTest {
 	
 	@Mock
 	private UserMapper userMapper;
-	
+
+	@Mock
+	private VerificationTokenRepository verificationTokenRepository;
+
 	@InjectMocks
 	private AuthenticationService authenticationService;
 	

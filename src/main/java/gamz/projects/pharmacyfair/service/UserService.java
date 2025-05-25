@@ -89,6 +89,12 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с таким ID не существует"));
     }
 
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь с таким ID не существует"));
+    }
+
     private UserDTO convertToDTO(User user) {
         return userMapper.toUserDTOFromUser(user);
     }

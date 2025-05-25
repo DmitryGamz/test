@@ -31,6 +31,8 @@ public class Organization {
 	private String name;
 	
 	private String description;
+
+	private String logoPath;
 	
 	@Column(name = "created_at")
 	private LocalDateTime created;

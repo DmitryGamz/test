@@ -6,12 +6,11 @@ import lombok.Setter;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Getter
 @Setter
 public class MedicationDTO {
     private Long id;
-    private UserDTO user;
+    private UserProjectDTO user;
     private ReferenceDTO productType;
     private String name;
     private String description;
@@ -21,15 +20,15 @@ public class MedicationDTO {
     private boolean iprValuationExists;
     private ReferenceDTO commercialStatus;
     private String commercialEffect;
-    private long marketPerspectivesId;
+    private ReferenceDTO marketPerspectives;
     private String novelty;
     private String keyDifferences;
     private Boolean exportPotential;
-    private ReferenceDTO hasStudentsInvolved;
+    private ReferenceDTO studentsInvolved;
     private ReferenceDTO techReadiness;
     private String presentationFilePath;
-    private List<ReferenceDTO> form;
-    private List<ReferenceDTO> priorityType;
-    private List<ReferenceDTO> applicationAreaMedication;
+    private List<ReferenceDTO> forms;
+    private List<ReferenceDTO> priorityTypes;
+    private List<ReferenceDTO> applicationAreaMedications;
     private List<ReferenceDTO> presentationFormats;
 }

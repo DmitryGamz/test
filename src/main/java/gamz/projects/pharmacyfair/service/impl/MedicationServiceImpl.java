@@ -3,7 +3,7 @@ package gamz.projects.pharmacyfair.service.impl;
 import gamz.projects.pharmacyfair.model.dto.MedicationDTO;
 import gamz.projects.pharmacyfair.model.entity.projects.Medication;
 import gamz.projects.pharmacyfair.model.exception.ProjectNotFoundException;
-import gamz.projects.pharmacyfair.model.mapper.MedicationMapper;
+import gamz.projects.pharmacyfair.model.mapper.ProjectMapper;
 import gamz.projects.pharmacyfair.repository.MedicationRepository;
 import gamz.projects.pharmacyfair.service.interfaces.MedicationService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 public class MedicationServiceImpl implements MedicationService {
 
     private final MedicationRepository medicationRepository;
-    private final MedicationMapper medicationMapper;
+    private final ProjectMapper mapper;
 
     @Override
     public List<Medication> findAll() {
@@ -33,7 +33,7 @@ public class MedicationServiceImpl implements MedicationService {
 
     @Override
     public Medication saveDto(MedicationDTO medicationDTO) {
-        Medication medication = medicationMapper.fromDtoToMedication(medicationDTO);
+        Medication medication = mapper.fromDtoToMedication(medicationDTO);
         medication = medicationRepository.save(medication);
         return medication;
     }

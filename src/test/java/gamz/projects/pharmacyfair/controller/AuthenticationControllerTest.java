@@ -59,7 +59,8 @@ class AuthenticationControllerTest {
 		authRequest.setEmail("test@example.com");
 		authRequest.setPassword("password123");
 
-		registrationResponse = new RegistrationResponse("", authRequest.getEmail());
+		authResponse = new AuthenticationResponse("test-jwt-token");
+		registrationResponse = new RegistrationResponse("Регистрация прошла успешно. Проверьте email для подтверждения аккаунта.", authRequest.getEmail());
 	}
 	
 	@Test
@@ -74,7 +75,7 @@ class AuthenticationControllerTest {
 						.content(objectMapper.writeValueAsString(registerRequest)))
 				.andDo(print()) // Print request/response for debugging
 				.andExpect(status().isOk())
-				.andExpect(content().json(objectMapper.writeValueAsString(authResponse)));
+				.andExpect(content().json(objectMapper.writeValueAsString(registrationResponse)));
 		
 		verify(authenticationService, times(1)).register(any(RegisterRequest.class));
 	}
@@ -123,7 +124,7 @@ class AuthenticationControllerTest {
 		mockMvc.perform(get("/api/v1/auth/clear"))
 				.andDo(print()) // Print request/response for debugging
 				.andExpect(status().isOk())
-				.andExpect(content().string("You successfully cleared the authentication."));
+				.andExpect(content().string("Вы успешно вышли из системы."));
 		
 		verify(authenticationService, times(1)).clearAuthentication();
 	}

@@ -48,7 +48,7 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
-    private ProjectStatus status;
+    private ProjectStatus projectStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ipr_status_id")
