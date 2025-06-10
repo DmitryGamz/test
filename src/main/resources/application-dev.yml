@@ -2,6 +2,10 @@ server:
   port: 8080
 
 spring:
+  web:
+    resources:
+      add-mappings: true
+
   application:
     name: Pharmacy Fair Dev
 
@@ -35,23 +39,25 @@ spring:
       enabled: true
       file: classpath:docker/docker-compose.yaml
 
-  #Друзья, написал пока на свою гугл почту
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RABBITMQ_USER:admin}
+    password: ${RABBITMQ_PASSWORD:securepass}
+
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: super.vvebmaster@gmail.com
-    password: "gdbs syao qlap bsio"
+    host: localhost
+    port: 1025
+    username: ${SMTP_USER}
+    password: ${SMTP_PASSWORD}
     protocol: smtp
-    default-encoding: UTF-8
     properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-          connectiontimeout: 5000
-          timeout: 5000
-          writetimeout: 5000
+      mail.smtp:
+        auth: true
+        starttls.enable: true
+        connectiontimeout: 5000
+        timeout: 5000
+        writetimeout: 5000
 
 logging:
   level:
@@ -78,3 +84,7 @@ management:
     web:
       exposure:
         include: '*'
+
+file:
+  storage:
+    location: /app/uploads

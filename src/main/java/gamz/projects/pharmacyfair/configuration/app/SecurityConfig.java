@@ -40,6 +40,8 @@ public class SecurityConfig {
 				.cors(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(
 						authorize -> authorize
+								.requestMatchers("/index.html", "/cabinet.html", "/maintenance.html", "/registration.html",
+										"/form_actor.html", "/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
 								.requestMatchers("/api/v1/auth/**").permitAll()
 								.requestMatchers("/api/v1/feedback/**").permitAll()
 								.requestMatchers(SWAGGER_WHITELIST).permitAll()

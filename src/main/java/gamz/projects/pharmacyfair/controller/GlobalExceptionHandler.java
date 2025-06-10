@@ -1,9 +1,14 @@
 package gamz.projects.pharmacyfair.controller;
 
+import gamz.projects.pharmacyfair.model.exception.FileNotAccessibleException;
+import gamz.projects.pharmacyfair.model.exception.FileStorageException;
+import gamz.projects.pharmacyfair.model.exception.InvalidFileException;
 import gamz.projects.pharmacyfair.model.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -148,4 +153,45 @@ public class GlobalExceptionHandler {
 		String exceptionName = ex.getClass().getSimpleName();
 		return exceptionName.toLowerCase().contains("alreadyexist");
 	}
+//
+//	@ExceptionHandler(DataIntegrityViolationException.class)
+//	public ResponseEntity<ErrorResponse> handleDataError(DataIntegrityViolationException ex) {
+//		String rootMessage = ex.getRootCause() != null ? ex.getRootCause().getMessage() : "Неизвестная причина";
+//		String message;
+//
+//		if (rootMessage.toLowerCase().contains("constraint")) {
+//			message = "Невозможно удалить: объект связан с другими сущностями. ";
+//		} else {
+//			message = "Ошибка при сохранении в БД. ";
+//		}
+//
+//		return ResponseEntity.status(HttpStatus.CONFLICT)
+//				.body(new ErrorResponse(409, message + rootMessage, LocalDateTime.now()));
+//	}
+//
+//	@ExceptionHandler(HttpMessageNotReadableException.class)
+//	public ResponseEntity<ErrorResponse> handleJsonError(HttpMessageNotReadableException ex) {
+//		return ResponseEntity.badRequest()
+//				.body(new ErrorResponse(400, "Ошибка чтения запроса. Проверь формат JSON", LocalDateTime.now()));
+//	}
+//
+//	@ExceptionHandler(InvalidFileException.class)
+//	public ResponseEntity<ErrorResponse> handleInvalidFile(InvalidFileException ex){
+//		return ResponseEntity.badRequest().body(
+//				new ErrorResponse(400, ex.getMessage(), LocalDateTime.now()));
+//	}
+//
+//	@ExceptionHandler(FileStorageException.class)
+//	public ResponseEntity<ErrorResponse> handleFileStorage(FileStorageException ex){
+//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+//				new ErrorResponse(500, ex.getMessage(), LocalDateTime.now())
+//		);
+//	}
+//
+//	@ExceptionHandler(FileNotAccessibleException.class)
+//	public ResponseEntity<ErrorResponse> handleFileNotAccessible(FileNotAccessibleException ex){
+//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+//				new ErrorResponse(405, ex.getMessage(), LocalDateTime.now())
+//		);
+//	}
 }

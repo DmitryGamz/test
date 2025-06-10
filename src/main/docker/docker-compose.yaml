@@ -1,15 +1,67 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:17.5-alpine
     ports:
-      - '5432:5432'
+      - '127.0.0.1:5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: pharmacy
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: no
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-admin}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-securepass}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+  smtp-relay:
+    image: namshi/smtp
+    environment:
+      - RELAY_HOST=${SMTP_HOST}
+      - RELAY_PORT=${SMTP_PORT}
+      - RELAY_USER=${SMTP_USER}
+      - RELAY_PASSWORD=${SMTP_PASSWORD}
+      - DISABLE_TLS=${DISABLE_TLS:-false}
+    ports:
+      - "1025:25"
+    networks:
+      - app-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.12.0
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./config/pipeline:/usr/share/logstash/pipeline
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

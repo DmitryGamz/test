@@ -3,88 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проект в разработке</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-
-        .container {
-            padding: 2rem;
-            max-width: 600px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .loader {
-            width: 100px;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            margin: 0 auto;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .loader-inner {
-            width: 40%;
-            height: 100%;
-            background: #fff;
-            animation: loading 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(250%); }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            p {
-                font-size: 1rem;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Ярмарка - Главная</title>
+    <script defer src="/js/main.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="container">
-    <h1>🚧 Проект в разработке</h1>
-    <p>Мы усердно работаем над созданием чего-то удивительного!</p>
-    <p>Пожалуйста, зайдите позже. Спасибо за понимание!</p>
-    <div class="loader">
-        <div class="loader-inner"></div>
+    <header class="header">
+        <div class="wrapper">
+            <div class="header__menu">
+                <div class="logo">
+                    <img src="/img/logo.svg" alt="">
+                </div>
+                <nav class="menu">
+                    <ul>
+                        <li><a class="link_active" href="#">Главная</a></li>
+                        <li><a href="#">Программа</a></li>
+                        <li><a href="#">Каталог разработок</a></li>
+                        <li><a href="#">Индустриальные партнеры</a></li>
+                        <li><a href="#">Конкурс</a></li>
+                        <li><a href="#">Участникам</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Архив</a></li>
+                    </ul>
+                </nav>
+                <div class="login">
+                    <a href="#" class="account__login">
+                        <img src="/img/account.svg" alt="" srcset="">
+                    </a>        
+                </div>
+            </div>    
+        </div>
+    </header>
+    <div class="popup__registration"></div>
+    <div class="popup__body ">
+        <div class="popup__content">
+            <h3 class="popup__title">Войти</h3>
+            <form class="form__login" id="formLogin">
+                <input type="text" placeholder="логин" required name="login" id="login">
+                <input type="text" placeholder="пароль" required name="pass" id="pass">
+                <a href="#">Забыли пароль?</a>
+                <button>Войти</button>
+                <a class="reg" href="#">Регистрация</a>
+            </form>  
+        </div>
     </div>
 </div>
+    <section class="main__index">
+        <div class="wrapper">
+            <div class="main__flex">
+                <div class="banner__main">
+                    <p><span>23 - 24 МАЯ</span> <br>
+                        МОСКВА, ВДНХ, ПАВИЛЬОН КОСМОС</p>
+                    <a href="/registration.html">Онлайн регистрация</a>
+                </div>
+                <div class="banner__about">
+                    <h3>О ярмарке</h3>
+                    <p>«Дело науки — служить людям»<br> 
+                        (Л. Н. Толстой)</p>
+                    <label class="label__lt" for="slide5"></label>
+                    <label class="label__gt" for="slide2"></label>
+                </div>
+                <div class="banner__program">
+                   <h3>Программа</h3>
+                </div>
+            </div>
+            <h2 class="guests__h2">Почетные гости</h2>
+            <div class="main__guests">
+                <div class="guests__block">
+                    <img src="/img/person1.png" alt="">
+                    <p>Зиновьев<br>
+                        Николай Александрович
+                        <span>заместитель директора<br> МГУ</span>
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person2.png" alt="">
+                    <p>Смирнов<br>
+                        Владимир Сергеевич
+                        <span>главный эксперт<br>
+                            ООО “СуперЭксперты”</span>
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person3.png" alt="">
+                    <p>Пискарёва<br>
+                        Наталья Николаевна
+                        <span>РГСУ НИИ ВШ</span>
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person4.png" alt="">
+                    <p>ФИО
+                        должность
+                        компания
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person5.png" alt="">
+                    <p>ФИО
+                        должность
+                        компания
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person6.png" alt="">
+                    <p>ФИО
+                        должность
+                        компания
+                    </p>
+                </div>
+                <div class="guests__block">
+                    <img src="/img/person7.png" alt="">
+                    <p>ФИО
+                        должность
+                        компания
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="main__flex">
+                <div class="banner__org">
+                    <h3>Организаторы</h3>
+                    <div class="org__items">
+                        <img class="org_img_1" src="/img/min_zdravoohranenie.png" alt="">
+                        <img class="org_img_3" src="/img/naychnie_centr.png" alt="">
+                        <img class="org_img_2" src="/img/naychnie_expert.png" alt="">
+                    </div>
+                </div>
+                <div class="banner__developers">
+                    <h3>Разработчики</h3>
+                    <a href="#">Все проекты</a>
+                </div>
+                <div class="banner__partners">
+                    <h3>Индустриальные партнеры</h3>
+                </div>
+                <a href="/registration.html"><div class="banner__registration">
+                    <h3>Регистрация</h3>
+                </div></a>
+                
+                <div class="logo__big">
+                    <img src="/img/logo_big.svg" alt="">
+                </div>
+            </div>
+            <h2 class="guests__h2 fairy__h2">Ярмарка разработок 2024</h2>
+            <div class="main__guests">
+                <div class="guests__block_quad">
+                    <img src="/img/photo1.png" alt="">
+                </div>
+                <div class="guests__block_quad">
+                    <img src="/img/photo2.png" alt="">
+                </div>
+                <div class="guests__block_quad">
+                    <img src="/img/photo3.png" alt="">
+                </div>
+                <div class="guests__block_quad">
+                    <img src="/img/photo4.png" alt="">
+                </div>
+                <div class="guests__block_quad">
+                    <img src="/img/photo5.png" alt="">
+                </div>
+             
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="wrapper">
+            <div class="main__flex">
+                <div class="footer__columns">
+                    <div class="footer__items">
+                        <div class="footer__logo">
+                            <img src="/img/logo_white_small.svg" alt="">
+                        </div>
+                        <div class="ncsp_logo">
+                            <img src="/img/ncsp_logo.svg" alt="">
+                        </div>
+                        <div class="qr__footer">
+                            <img src="/img/qr.svg" alt="">
+                        </div>
+                        <div class="footer__address">
+                            <address>Адрес:  г. Москва, ВДНХ, павильон Космос</address>
+                            <div class="phone">Телефон: 8(987) 654-32-11</div>
+                            <div class="email">yarmarkarazrabotok@razrabotki.ru</div>
+                        </div>
+                        <div class="footer__map">
+                            <img src="/img/map.png" alt="">
+                        </div>
+                    </div>
+                    <div class="footer__btns">
+                        <a href="#">Контакты</a>
+                        <a href="#">Как добраться</a>
+                        <a href="/registration.html">Регистрация</a>
+                    </div>
+                    <div class="footer__copyright">
+                        <p>© 2025 Ярмарка разработок. Все права защищены. При любом использовании материалов Ярмарка разработок ссылка (для сайтов - гиперссылка 
+                            на www.yarmarkarazrabotok.ru) обязательна. Используя настоящий сайт, вы обязуетесь выполнять условия данного <span>пользовательского соглашения.  
+                            Политика конфеденциальности сайта. </span></p>
+                    </div>
+                </div>
+                      
+                <div class="footer__form">
+                    <h4>Задать вопрос</h4>
+                    <form class="footer__form_main" action="#">
+                        <div class="inputs">
+                            <input type="text" placeholder="Фамилия Имя Отчество">
+                            <input type="email" placeholder="E-mail">
+                        </div>
+                        <div class="textarea">
+                            <textarea name="" id="" placeholder="Текстовое поле для вопроса"></textarea>
+                        </div>
+                        <p>Нажимая на кнопку “Отправить вопрос”, я соглашаюсь с условиями пользовательского соглашения и политикой конфиденциальности сайта</p>
+                        <div class="footer__btn-flex">
+                            <a href="#">Задать вопрос</a>
+                        </div>            
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
 </body>
 </html>
